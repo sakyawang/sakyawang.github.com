@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://blog.whiii.com/</loc>
+		<loc>http://sakyawang.github.io//</loc>
 	</url>
 	<url>
-		<loc>http://blog.whiii.com/default/goodday/</loc>
-		<lastmod>2015-07-06</lastmod>
-		<changefreq>weekly</changefreq>
-	</url>
-	<url>
-		<loc>http://blog.whiii.com/2013/new-born.html</loc>
-		<lastmod>2013-02-08</lastmod>
+		<loc>http://sakyawang.github.io//golang/%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BAgolang%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/</loc>
+		<lastmod>2015-07-07</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 </urlset>
