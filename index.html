@@ -128,6 +128,54 @@
 </div>
 
 <div class="post">
+  <h3 class="title"><a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/">java des加密实践</a> <span class="date">2015-07-09</span></h3>
+
+  <h2>背景</h2>
+
+<p>工作中数据加密是C++实现的des加密，业务方是java语言。现在需要使用java对C++加密的内容进行解密。</p>
+
+<p>思路：</p>
+
+<p>根据C++的des加密算法实现，使用java进行逆向处理。</p>
+
+<p>具体代码如下：</p>
+
+<pre><code>import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+public class DESUtil {
+
+    private static final String Key = &quot;d4odQA#5&quot;;
+    private static final String Algorithm = &quot;DES&quot;;  //定义 加密算法,可用 DES,DESede,Blowfish
+
+    // 加密字符串
+    public static String encryptMode(String src) {
+        String hexStr = &quot;&quot;;
+        try {
+            Cipher c1 = Cipher.getInstance(&quot;DES/ECB/NoPadding&quot;);
+            SecretKey key = new SecretKeySpec(Key.getBytes(), Algorithm);//生成加密解密需要的Key
+            c1.init(Cipher.ENCRYPT_MODE, key);
+            byte[] bytes = c1.doFinal(getByte(src));
+            hexStr = bytesToHexString(bytes);
+        } catch (java.security.NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        } catch (javax.crypto.NoSuchPaddingException e2) {
+            e2.printStackTrace();
+        } catch (java.lang.Exception e3) {
+            e3.printStackTrace();
+        }
+        return hexStr;
+    }
+</code></pre>
+
+
+  <div class="more">
+    <a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/微信公众平台/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">微信公众平台开发入门</a> <span class="date">2015-07-08</span></h3>
 
   <p>因工作需要，要在微信公众平台上进行服务号的开发，现记录下开发流程。</p>
