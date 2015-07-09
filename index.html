@@ -96,6 +96,38 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/">post请求执行window open</a> <span class="date">2015-07-09</span></h3>
+
+  <h2>背景</h2>
+
+<p>一般在html中打开新页面都是直接使用window.open(url)，打开新的页面是get请求，如果url有参数的话URL就会很长，在浏览器上会有参数显示。这里使用post请求可以避免该问题。</p>
+
+<h2>处理方案</h2>
+
+<p>创建一个form表单method为post方式：</p>
+
+<pre><code>&lt;form action=&quot;&quot; method=&quot;post&quot; name=&quot;targetForm&quot; id=&quot;targetForm&quot; target=&quot;targetForm&quot; onsubmit=&quot;openWindow('targetForm');&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;name1&quot; id=&quot;id1&quot;/&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;name2&quot; id=&quot;id2&quot;/&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p>添加onsubmit事件，执行openWindow（），具体js函数如下：</p>
+
+<pre><code>function openWindow(name){    
+    window.open('about:blank',name);     
+}  
+</code></pre>
+
+<p>关键点是：</p>
+
+
+  <div class="more">
+    <a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/微信公众平台/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">微信公众平台开发入门</a> <span class="date">2015-07-08</span></h3>
 
   <p>因工作需要，要在微信公众平台上进行服务号的开发，现记录下开发流程。</p>
