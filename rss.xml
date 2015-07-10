@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>王浩的小课桌</title>
     <link>http://sakyawang.github.io</link>
-    <pubDate>09 Jul 15 14:59 CST</pubDate>
+    <pubDate>10 Jul 15 21:34 CST</pubDate>
+    <item>
+      <title>记一次处理http请求返回json数据中文乱码问题</title>
+      <link>http://sakyawang.github.io/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>2015-07-10 12:00:00 +0800</pubDate>
+      <description>&lt;h2&gt;背景&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;项目中rest接口返回中文错误提示信息显示乱码。&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;环境&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;apache httpClient&lt;/p&gt;&#xA;&#xA;&lt;p&gt;spring mvc&lt;/p&gt;&#xA;&#xA;&lt;p&gt;tomcat&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;处理过程&lt;/h2&gt;&#xA;&#xA;&lt;h3&gt;分析理清问题&lt;/h3&gt;&#xA;&#xA;&lt;p&gt;接口部署在本地tomcat上时，使用Apache httpClient客户端访问无乱码。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;接口部署到服务器上的tomcat时，使用Apache httpClient客户端访问返回结果中文乱码。&lt;/p&gt;&#xA;&#xA;&lt;h3&gt;初次排查&lt;/h3&gt;&#xA;&#xA;&lt;p&gt;检查HttpClient请求Content-type为UTF-8，排除客户端编码问题。&lt;/p&gt;&#xA;&#xA;&lt;h3&gt;再次排查&lt;/h3&gt;&#xA;&#xA;&lt;p&gt;查看本地tomcat编码为默认编码，服务器tomcat编码为UTF-8编码。怀疑是tomcat编码问题导致的，&#xA;修改本地tomcat编码为UTF-8，测试无乱码，排除tomcat编码问题。&lt;/p&gt;&#xA;&#xA;&lt;h3&gt;第三次排查&lt;/h3&gt;&#xA;&#xA;&lt;p&gt;因为客户端和服务器编码都没有问题，怀疑是接口输出数据有问题。添加日志记录输出结果，发现数据无乱码。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;怀疑是spring mvc 视图返回json字符串时编码有问题。百度一下发现spring mvc确实存在视图返回json字符串时使用的是iso-8859-1编码。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;测试之，使用response out流输出json字符串，结果无乱码。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;确定问题和spring mvc返回json数据编码导致。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;暂时使用输出流直接输出json字符串。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;后续再测试网上提供的其他解决方案。&lt;/p&gt;&#xA;</description>
+    </item>
     <item>
       <title>post请求执行window open</title>
       <link>http://sakyawang.github.io/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/</link>
