@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>markdown pad 生成带目录的html</title>
+    <title>使用sublime text2 编辑markdown文件并导出带目录的html</title>
   
-    <meta name="description" content="使用markdown pad生成带目录的html">
+    <meta name="description" content="使用sublime text 2 配置markdown高亮显示，导出带目录的html">
   
     <meta name="author" content="Hao Wang">
 
@@ -80,125 +80,116 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>markdown pad 生成带目录的html </h1>
+  <h1>使用sublime text2 编辑markdown文件并导出带目录的html </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>环境</h2>
+    <p>前一篇文章介绍了使用markdown pad2来生成带目录的html文件。但是有很多程序员喜欢使用sublime来进行markdown的编写。这里介绍一下sublime下如何把markdown文件生成带目录的html。</p>
 
-<p>win7、markdown pad 2</p>
+<h2>环境</h2>
 
-<h2>目的</h2>
+<p>win7、 sublime text2</p>
 
-<p>使用markdown pad 2编辑生成wiki风格的接口文档</p>
+<h2>配置过程</h2>
 
-<h2>处理方案</h2>
+<p><strong>sublime text 安装 markdown preview插件</strong></p>
 
-<p>使用markdown pad 2的导出功能和高级设置的Html head 编辑器功能。</p>
+<p>sublime text 安装插件基本配置请参看之前的一篇文章：</p>
 
-<ul>
-<li>工具&ndash;&gt;选项&ndash;&gt;高级&ndash;&gt;Html head 编辑器</li>
-</ul>
+<p><a href="http://sakyawang.github.io/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/">sublime text2 安装插件</a></p>
 
-<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/markdownpadconfig.png" alt="html head 编辑器" /></p>
+<p>ctrl+shift+P 调出窗口，输入 install package &ndash;&gt; 输入 markdown preview 选中安装插件。</p>
 
-<ul>
-<li>打开编辑器</li>
-</ul>
+<p><strong>配置markdown高亮显示</strong></p>
 
-<p>输入：</p>
+<p>在Preferences -&gt;Package Settings-&gt;Markdown Preview-&gt;Setting Default中找到</p>
 
-<pre><code>&lt;script&gt;
-    document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
-        // 生成目录列表
-        var outline = document.createElement(&quot;ul&quot;);
-        outline.setAttribute(&quot;id&quot;, &quot;outline-list&quot;);
-        outline.style.cssText = &quot;border: 1px solid #ccc;&quot;;
-        document.body.insertBefore(outline, document.body.childNodes[0]);
-        // 获取所有标题
-        var headers = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
-        for (var i = 0; i &lt; headers.length; i++) {
-            var header = headers[i];
-            var hash = _hashCode(header.textContent);
-            // MarkdownPad2无法为中文header正确生成id，这里生成一个
-            header.setAttribute(&quot;id&quot;, header.tagName + hash);
-            // 找出它是H几，为后面前置空格准备
-            var prefix = parseInt(header.tagName.replace('H', ''), 10);
-            outline.appendChild(document.createElement(&quot;li&quot;));
-            var a = document.createElement(&quot;a&quot;);
-            // 为目录项设置链接
-            a.setAttribute(&quot;href&quot;, &quot;#&quot; + header.tagName + hash)
-            // 目录项文本前面放置对应的空格
-            a.innerHTML = new Array(prefix * 4).join('&amp;nbsp;') + header.textContent;
-            outline.lastChild.appendChild(a);
-        }
+<pre><code>&quot;enable_mathjax&quot;: true,
 
-    });
+/*
+    Enable uml support scripts: flowchart.js and sequence-diagram.js.
+*/
+&quot;enable_uml&quot;: false,
 
-    // 类似Java的hash生成方式，为一段文字生成一段基本不会重复的数字
-    function _hashCode(txt) {
-         var hash = 0;
-         if (txt.length == 0) return hash;
-         for (i = 0; i &lt; txt.length; i++) {
-              char = txt.charCodeAt(i);
-              hash = ((hash&lt;&lt;5)-hash)+char;
-              hash = hash &amp; hash; // Convert to 32bit integer
-         }
-         return hash;
-    }
-&lt;/script&gt;
+/*
+    Enable highlighting. This enables codehilite extension if not already enabled.
+*/
+&quot;enable_highlight&quot;: true,
 </code></pre>
 
-<p>保存</p>
+<p>enable_mathjax 和 enable_highlight设置为true。</p>
 
-<ul>
-<li>测试效果</li>
-</ul>
+<h2>编写markdown输出带目录的html</h2>
 
-<p><strong>新建test.md编辑：</strong></p>
+<p>新建test.md文件，输入测试内容：</p>
 
-<pre><code>## 标题1
+<pre><code>[TOC]
+# 标题 #
+## 标题1 ##
+
 标题1内容
-### 标题11
+
+### 标题11 ###
+
 标题11内容
-### 标题12
+
+### 标题12 ###
+
 标题12内容
-## 标题2
+
+## 标题2 ##
+
 标题2内容
-### 标题21
+
+### 标题21 ###
+
 标题21内容
-### 标题22
+
+### 标题22 ###
+
 标题22内容
-## 标题3
+
+## 标题3 ##
+
 标题3内容
-### 标题31
+
+### 标题31 ###
+
 标题31内容
-### 标题32
+
+### 标题32 ###
+
 标题32内容
 </code></pre>
 
-<p><strong>导出html文件</strong></p>
+<p>配置markdown preview编译生成html文件，如下：</p>
 
-<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/export.png" alt="导出html文件" /></p>
+<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/sublimeconfig.png" alt="配置markdown编译" /></p>
 
-<p><strong>查看html文件</strong></p>
+<p>执行ctrl + B编译markdown为html</p>
 
-<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/html.png" alt="查看html" /></p>
+<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/buildmarkdown.png" alt="编译markdown" /></p>
+
+<p>打开test.html查看效果</p>
+
+<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/testhtml.jpg" alt="效果" /></p>
+
+<p><strong><em>关键点是在要生成目录的位置添加[TOC]</em></strong></p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/markdown/%E4%BD%BF%E7%94%A8sublime-text2-%E7%BC%96%E8%BE%91markdown%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" title="使用sublime text2 编辑markdown文件并导出带目录的html">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" title="记一次处理http请求返回json数据中文乱码问题">Next &rarr;</a></li>
+            <li class="next"><a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" title="markdown pad 生成带目录的html">Next &rarr;</a></li>
           
           
         </ul>
@@ -233,6 +224,10 @@
   <a href="/categories/#markdown-ref">markdown <span>2</span></a>
 </li>
     
+      <li>
+  <a href="/categories/#sublime-ref">sublime <span>2</span></a>
+</li>
+    
     </ul>
     <br>
     <h4>Tags</h4>
@@ -243,7 +238,7 @@
 </li>
     
       <li>
-  <a href="/tags/#config-ref">config <span>2</span></a>
+  <a href="/tags/#sublime-ref">sublime <span>2</span></a>
 </li>
     
     </ul>
