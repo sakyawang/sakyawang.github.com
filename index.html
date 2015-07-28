@@ -96,6 +96,40 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/设计模式/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">设计模式解读之一： 策略模式</a> <span class="date">2015-07-28</span></h3>
+
+  <p>转自：<a href="http://www.javaeye.com/topic/328262">http://www.javaeye.com/topic/328262</a></p>
+
+<p>当我们掌握了Java的语法，当我们了解了面向对象的封装、继承、多态等特性，当我们可以用Swing、Servlet、JSP技术构建桌面以及Web应用，不意味着我们可以写出面向对象的程序，不意味着我们可以很好的实现代码复用，弹性维护，不意味着我们可以实现在维护、扩展基础上的代码复用。</p>
+
+<p>一把刀，可以使你制敌于无形而于江湖扬名，也可以只是一把利刃而使你切菜平静。Java，就是这把刀，它的威力取决于你使用的方式。当我们陷入无尽无止重复代码的泥沼，当我们面临牵一发而动全身的维护恶梦, 你应该想起“设计模式”这个行动秘笈。</p>
+
+<p>面向对象的精义，看似平淡，其实要经过艰苦实践才能成功。而构造OO系统的隐含经验于是被前人搜集而成并冠以“设计模式”之名。我们应该在编码行动初始就携带以它。接下来，让我们步“四人组”先行者之后，用中国文字、用实际案例领略模式于我们代码焕然一新的改变。</p>
+
+<h2>设计模式解读之一： 策略模式</h2>
+
+<p><strong>1. 模式定义</strong></p>
+
+<p>把会变化的内容取出并封装起来，以便以后可以轻易地改动或扩充部分，而不影响不需要变化的其他部分；</p>
+
+<p><strong>2. 问题缘起</strong></p>
+
+<p>当涉及至代码维护时，为了复用目的而使用继承，结局并不完美。对父类的修改，会影响到子类型。在超类中增加的方法，会导致子类型有该方法，甚至连那些不该具备该方法的子类型也无法免除。示例，一个鸭子类型：</p>
+
+<pre><code>public abstract class Duck {
+    //所有的鸭子均会叫以及游泳，所以父类中处理这部分代码
+    public void quack() {
+        System.out.println(&quot;Quack&quot;);
+    }
+</code></pre>
+
+
+  <div class="more">
+    <a href="/设计模式/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/转载/stack%E7%9A%84%E4%B8%89%E7%A7%8D%E5%90%AB%E4%B9%89/">stack的三种含义</a> <span class="date">2015-07-17</span></h3>
 
   <p>本文来自：</p>
@@ -414,35 +448,6 @@ d:\mongodb\bin&gt;mongod -dbpath &quot;d:\mongoDB\data\db&quot;
 
   <div class="more">
     <a href="/mongodb/mongodb%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/golang/gor%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">gor创建个人博客</a> <span class="date">2015-07-08</span></h3>
-
-  <h2>环境</h2>
-
-<p>win7、golang、git</p>
-
-<h2>下载安装gor</h2>
-
-<p><a href="https://github.com/wendal/gor">gor github</a>
-里面有gor的安装和使用说明。</p>
-
-<p>这里主要说一下使用中遇到的问题：</p>
-
-<p>执行 go install github.com/wendal/gor/gor 操作的时候
-会报错：</p>
-
-<p>connot find package &ldquo;github.com/howeyc/fsnotify&rdquo;</p>
-
-<p>处理方案如下：</p>
-
-<p><a href="https://github.com/howeyc/fsnotify">https://github.com/howeyc/fsnotify</a></p>
-
-
-  <div class="more">
-    <a href="/golang/gor%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="btn">read more..</a>
   </div>
 </div>
 
