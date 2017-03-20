@@ -121,7 +121,7 @@ d:\mongodb\bin&gt;mongod -dbpath &quot;d:\mongoDB\data\db&quot;
 <pre><code>d:\mongoDB\bin&gt;mongod --dbpath &quot;d:\mongoDB\data\db&quot; --logpath &quot;d:\mongoDB\data\log\MongoDB.log&quot; --install --serviceName &quot;MongoDB&quot;
 </code></pre>
 
-<p>　这里MongoDB.log就是开始建立的日志文件，&ndash;serviceName &ldquo;MongoDB&rdquo; 设置服务名为MongoDB。</p>
+<p>　这里MongoDB.log就是开始建立的日志文件，--serviceName &ldquo;MongoDB&rdquo; 设置服务名为MongoDB。</p>
 
 <p>　接着启动mongodb服务</p>
 
@@ -155,7 +155,7 @@ d:\mongodb\bin&gt;mongod -dbpath &quot;d:\mongoDB\data\db&quot;
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>

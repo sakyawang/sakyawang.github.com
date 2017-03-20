@@ -96,6 +96,48 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/java/alibaba-java/">alibaba-java</a> <span class="date">2017-03-20</span></h3>
+
+  <p>根据<a href="https://yq.aliyun.com/attachment/download/?id=1170">阿里巴巴java开发手册.pdf</a>转化。</p>
+
+<h2>一、编程规约</h2>
+
+<h3>(一)  命名规约</h3>
+
+<ol>
+<li><p>【强制】  代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。</p>
+
+<p>反例： _name / _<em>name / $Object / name</em> / name$ / Object$</p></li>
+
+<li><p>【强制】  代码中的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。</p>
+
+<p>说明：正确的英文拼写和语法可以让阅读者易于理解，避免歧义。注意，即使纯拼音命名方式也要避免采用。</p>
+
+<p>反例： DaZhePromotion [打折] / getPingfenByName() [评分] / int  某变量  = 3</p>
+
+<p>正例： alibaba / taobao / youku / hangzhou  等国际通用的名称，可视同英文。</p></li>
+
+<li><p>【强制】类名使用 UpperCamelCase 风格，必须遵从驼峰形式，但以下情形例外：（领域模型的相关命名）DO / BO / DTO / VO 等。</p></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/java/alibaba-java/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/default/java%E4%BB%A3%E7%90%86/">java代理</a> <span class="date">2015-07-29</span></h3>
+
+  <p>（1）Proxy 毕竟是通过反射实现的，必须在效率上付出代价：有实验数据表明，调用反射比一般的函数开销至少要大 10 倍。而且，从程序实现上可以看出，对 proxy class 的所有方法调用都要通过使用反射的 invoke 方法。因此，对于性能关键的应用，使用 proxy class 是需要精心考虑的，以避免反射成为整个应用的瓶颈。（2）CGLib封装了asm，可以再运行期动态生成新的class。ASM 能够通过改造既有类，直接生成需要的代码。增强的代码是硬编码在新生成的类文件内部的，没有反射带来性能上的付出。同时，ASM 与 Proxy 编程不同，不需要为增强代码而新定义一个接口，生成的代码可以覆盖原来的类，或者是原始类的子类。（3）CGLib在不同频次的调用性能会发生变化，体现为调用频次越高、性能越好。（4）不同版本的JDK中JDK Proxy的性能也不尽相同，越高版本的JDK（JDK7及以上），性能提升越明显。</p>
+
+
+  <div class="more">
+    <a href="/default/java%E4%BB%A3%E7%90%86/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/设计模式/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">设计模式解读之一： 策略模式</a> <span class="date">2015-07-28</span></h3>
 
   <p>转自：<a href="http://www.javaeye.com/topic/328262">http://www.javaeye.com/topic/328262</a></p>
@@ -145,7 +187,7 @@
 
 <h2>含义一：数据结构</h2>
 
-<p>stack的第一种含义是一组数据的<a href="http://en.wikipedia.org/wiki/Stack_(abstract_data_type">存放方式</a>)，特点为LIFO，即后进先出（Last in, first out）。</p>
+<p>stack的第一种含义是一组数据的<a href="http://en.wikipedia.org/wiki/Stack_(abstract_data_type)">存放方式</a>，特点为LIFO，即后进先出（Last in, first out）。</p>
 
 <p><img src="http://image.beekka.com/blog/201311/bg2013112901.png" alt="stack" /></p>
 
@@ -174,7 +216,7 @@
 
 <p><a href="http://sakyawang.github.io/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/">sublime text2 安装插件</a></p>
 
-<p>ctrl+shift+P 调出窗口，输入 install package &ndash;&gt; 输入 markdown preview 选中安装插件。</p>
+<p>ctrl+shift+P 调出窗口，输入 install package --&gt; 输入 markdown preview 选中安装插件。</p>
 
 <p><strong>配置markdown高亮显示</strong></p>
 
@@ -202,7 +244,7 @@
 <p>使用markdown pad 2的导出功能和高级设置的Html head 编辑器功能。</p>
 
 <ul>
-<li>工具&ndash;&gt;选项&ndash;&gt;高级&ndash;&gt;Html head 编辑器</li>
+<li>工具--&gt;选项--&gt;高级--&gt;Html head 编辑器</li>
 </ul>
 
 <p><img src="http://7xj99v.com1.z0.glb.clouddn.com/markdownpadconfig.png" alt="html head 编辑器" /></p>
@@ -383,71 +425,6 @@ public class DESUtil {
 
   <div class="more">
     <a href="/微信公众平台/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/">sublime text2 安装插件</a> <span class="date">2015-07-08</span></h3>
-
-  <p>sublime tex t2本身自带了编程语言雷插件，可以通过Preferences&ndash;&gt;Browse Packages查看。
-当然还有一些方便开发的插件需要单独安装。这里说一下sublime text2安装插件的操作流程。</p>
-
-<h2>环境</h2>
-
-<p>win7、sublime text2</p>
-
-<h2>配置</h2>
-
-<p>打开sublime 使用ctrl+` 调出控制台窗口，输入：</p>
-
-<pre><code>import urllib2,os; 
-pf='Package Control.sublime-package'; 
-ipp=sublime.installed_packages_path(); 
-os.makedirs(ipp) 
-if not 
-    os.path.exists(ipp) 
-else 
-    None; 
-urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler()));
-open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); 
-print 'Please restart Sublime Text to finish installation'
-</code></pre>
-
-
-  <div class="more">
-    <a href="/sublime/sublime-text2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/mongodb/mongodb%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">mongodb安装配置</a> <span class="date">2015-07-08</span></h3>
-
-  <p>使用mongoDB zip安装包安装配置mongodb。</p>
-
-<h2>安装</h2>
-
-<p>下载mongoDB安装包。</p>
-
-<p><a href="https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-3.0.4.zip">https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-3.0.4.zip</a></p>
-
-<p>解压缩安装包到 D盘根目录 D:\mongoDB</p>
-
-<p>mongoDB目录下创建data\db目录和data\log目录
-分别用来安装db和日志文件，在log文件夹下创建一个日志文件MongoDB.log。</p>
-
-<p>运行cmd.exe进入dos命令界面，执行下列命令，启动MongoDB</p>
-
-<pre><code>cd d:\mongoDB\bin
-d:\mongodb\bin&gt;mongod -dbpath &quot;d:\mongoDB\data\db&quot;
-</code></pre>
-
-<p>如果看到信息显示当前监听端口27017则表示启动成功。</p>
-
-<h2>测试连接</h2>
-
-
-  <div class="more">
-    <a href="/mongodb/mongodb%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="btn">read more..</a>
   </div>
 </div>
 

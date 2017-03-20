@@ -2,9 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>post请求执行window open</title>
-  
-    <meta name="description" content="window open新页面以post请求发送（url上不带参数）">
+    <title>java代理</title>
   
     <meta name="author" content="Hao Wang">
 
@@ -80,56 +78,26 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>post请求执行window open </h1>
+  <h1>java代理 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>背景</h2>
-
-<p>一般在html中打开新页面都是直接使用window.open(url)，打开新的页面是get请求，如果url有参数的话URL就会很长，在浏览器上会有参数显示。这里使用post请求可以避免该问题。</p>
-
-<h2>处理方案</h2>
-
-<p>创建一个form表单method为post方式：</p>
-
-<pre><code>&lt;form action=&quot;&quot; method=&quot;post&quot; name=&quot;targetForm&quot; id=&quot;targetForm&quot; target=&quot;targetForm&quot; onsubmit=&quot;openWindow('targetForm');&quot;&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name1&quot; id=&quot;id1&quot;/&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name2&quot; id=&quot;id2&quot;/&gt;
-&lt;/form&gt;
-</code></pre>
-
-<p>添加onsubmit事件，执行openWindow（），具体js函数如下：</p>
-
-<pre><code>function openWindow(name){    
-    window.open('about:blank',name);     
-}  
-</code></pre>
-
-<p>关键点是：</p>
-
-<pre><code>onsubmit=&quot;openWindow('targetForm');&quot;
-</code></pre>
-
-<p>中参数要是form表单的名字。</p>
-
-<p>然后在操作的时候触发表单的提交事件：</p>
-
-<p>$(&ldquo;#targetForm&rdquo;).submit();</p>
+    <p>（1）Proxy 毕竟是通过反射实现的，必须在效率上付出代价：有实验数据表明，调用反射比一般的函数开销至少要大 10 倍。而且，从程序实现上可以看出，对 proxy class 的所有方法调用都要通过使用反射的 invoke 方法。因此，对于性能关键的应用，使用 proxy class 是需要精心考虑的，以避免反射成为整个应用的瓶颈。（2）CGLib封装了asm，可以再运行期动态生成新的class。ASM 能够通过改造既有类，直接生成需要的代码。增强的代码是硬编码在新生成的类文件内部的，没有反射带来性能上的付出。同时，ASM 与 Proxy 编程不同，不需要为增强代码而新定义一个接口，生成的代码可以覆盖原来的类，或者是原始类的子类。（3）CGLib在不同频次的调用性能会发生变化，体现为调用频次越高、性能越好。（4）不同版本的JDK中JDK Proxy的性能也不尽相同，越高版本的JDK（JDK7及以上），性能提升越明显。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" title="记一次处理http请求返回json数据中文乱码问题">&larr; Previous</a></li>
+            <li class="prev"><a href="/java/alibaba-java/" title="alibaba-java">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/" title="java des加密实践">Next &rarr;</a></li>
+            <li class="next"><a href="/设计模式/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="设计模式解读之一： 策略模式">Next &rarr;</a></li>
           
           
         </ul>
@@ -155,27 +123,19 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2015-07-09</span></div>
+    <div class="date"><span>2015-07-29</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#javascript-ref">javascript <span>1</span></a>
+  <a href="/categories/#default-ref">default <span>1</span></a>
 </li>
     
     </ul>
     <br>
     <h4>Tags</h4>
     <ul class="tag_box">
-    
-      <li>
-  <a href="/tags/#javascript-ref">javascript <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#html-ref">html <span>1</span></a>
-</li>
     
     </ul>
   </div>
