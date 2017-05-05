@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>王浩的小课桌</title>
     <link>http://sakyawang.github.io</link>
-    <pubDate>20 Mar 17 11:37 CST</pubDate>
+    <pubDate>05 May 17 19:29 CST</pubDate>
+    <item>
+      <title>centos7 lvs扩容</title>
+      <link>http://sakyawang.github.io/linux/centos7-lvs%E6%89%A9%E5%AE%B9/</link>
+      <pubDate>2017-05-05 12:00:00 +0800</pubDate>
+      <description>&lt;h1&gt;centos7 lvs扩容&lt;/h1&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;p&gt;创建新分区&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;fdisk -l        //查看可用硬盘(如：sda)&#xA;fdisk /dev/sda  &#xA;n               //新增分区&#xA;w               //保存操作&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;修改分区格式为lvm&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;fdisk /dev/sda&#xA;t               //修改分区类型&#xA;L               //显示分区类型表&#xA;8e              //修改分区类型为lvm&#xA;w               //保存修改&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;创建物理卷&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;pvcreate /dev/sda3 //创建物理卷sda3,最好重启一下&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;centos卷组扩展&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;pvs                         //查看物理卷列表&#xA;vgs                         //查看卷组列表&#xA;vgextend centos /dev/sda3   //centos卷组追加/dev/sda3物理卷&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;逻辑卷扩展&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;lvs                                         //逻辑卷列表&#xA;lvextend -L +30G /dev/mapper/centos-root    //逻辑卷扩展大小 &#xA;lvscan            //List all logical volumes in all volume groups&#xA;xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;</description>
+    </item>
     <item>
       <title>alibaba-java</title>
       <link>http://sakyawang.github.io/java/alibaba-java/</link>
