@@ -96,6 +96,39 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/nginx/nginx-start/">nginx-start</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>centos7下yum安装nginx并配置开机启动</h1>
+
+<hr />
+
+<ol>
+<li><p>新增yum源</p>
+
+<p>/etc/yum.repo.d下新建nginx.repo</p>
+
+<pre><code>[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+</code></pre></li>
+
+<li><p>安装</p>
+
+<pre><code>sudo yum install nginx
+</code></pre></li>
+
+<li><p>配置</p></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nginx/nginx-start/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/">centos7 lvs扩容</a> <span class="date">2017-05-05</span></h3>
 
   <h1>centos7 lvs扩容</h1>
@@ -377,54 +410,6 @@ w               //保存修改
 
   <div class="more">
     <a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/">java des加密实践</a> <span class="date">2015-07-09</span></h3>
-
-  <h2>背景</h2>
-
-<p>工作中数据加密是C++实现的des加密，业务方是java语言。现在需要使用java对C++加密的内容进行解密。</p>
-
-<p>思路：</p>
-
-<p>根据C++的des加密算法实现，使用java进行逆向处理。</p>
-
-<p>具体代码如下：</p>
-
-<pre><code>import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-public class DESUtil {
-
-    private static final String Key = &quot;d4odQA#5&quot;;
-    private static final String Algorithm = &quot;DES&quot;;  //定义 加密算法,可用 DES,DESede,Blowfish
-
-    // 加密字符串
-    public static String encryptMode(String src) {
-        String hexStr = &quot;&quot;;
-        try {
-            Cipher c1 = Cipher.getInstance(&quot;DES/ECB/NoPadding&quot;);
-            SecretKey key = new SecretKeySpec(Key.getBytes(), Algorithm);//生成加密解密需要的Key
-            c1.init(Cipher.ENCRYPT_MODE, key);
-            byte[] bytes = c1.doFinal(getByte(src));
-            hexStr = bytesToHexString(bytes);
-        } catch (java.security.NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        } catch (javax.crypto.NoSuchPaddingException e2) {
-            e2.printStackTrace();
-        } catch (java.lang.Exception e3) {
-            e3.printStackTrace();
-        }
-        return hexStr;
-    }
-</code></pre>
-
-
-  <div class="more">
-    <a href="/java/java-des%E5%8A%A0%E5%AF%86%E5%AE%9E%E8%B7%B5/" class="btn">read more..</a>
   </div>
 </div>
 

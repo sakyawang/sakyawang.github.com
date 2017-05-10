@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>centos7 lvs扩容</title>
+    <title>centos7下yum安装nginx并配置开机启动</title>
   
-    <meta name="description" content="centos7 lvs已挂载目录扩容">
+    <meta name="description" content="centos7 下yum安装nginx并配置开机启动">
   
     <meta name="author" content="Hao Wang">
 
@@ -80,65 +80,214 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>centos7 lvs扩容 </h1>
+  <h1>centos7下yum安装nginx并配置开机启动 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>centos7 lvs扩容</h1>
+    <h1>centos7下yum安装nginx并配置开机启动</h1>
 
 <ol>
-<li><p>创建新分区</p>
+<li><p>新增yum源</p>
 
-<pre><code>fdisk -l        //查看可用硬盘(如：sda)
-fdisk /dev/sda  
-n               //新增分区
-w               //保存操作
+<p>/etc/yum.repo.d下新建nginx.repo</p>
+
+<pre><code>[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
 </code></pre></li>
 
-<li><p>修改分区格式为lvm</p>
+<li><p>安装</p>
 
-<pre><code>fdisk /dev/sda
-t               //修改分区类型
-L               //显示分区类型表
-8e              //修改分区类型为lvm
-w               //保存修改
+<pre><code>sudo yum install nginx
 </code></pre></li>
 
-<li><p>创建物理卷</p>
+<li><p>配置</p>
 
-<pre><code>pvcreate /dev/sda3 //创建物理卷sda3,最好重启一下
+<p><a href="https://www.nginx.com/resources/wiki/start/topics/examples/redhatnginxinit/">官网配置</a></p>
+
+<p>vim /etc/init.d/nginx</p>
+
+<pre><code>#!/bin/sh
+#
+# nginx - this script starts and stops the nginx daemon
+#
+# chkconfig:   - 85 15
+# description:  NGINX is an HTTP(S) server, HTTP(S) reverse \
+#               proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config:      /etc/nginx/nginx.conf
+# config:      /etc/sysconfig/nginx
+# pidfile:     /var/run/nginx.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ &quot;$NETWORKING&quot; = &quot;no&quot; ] &amp;&amp; exit 0
+
+nginx=&quot;/usr/sbin/nginx&quot;
+prog=$(basename $nginx)
+
+NGINX_CONF_FILE=&quot;/etc/nginx/nginx.conf&quot;
+
+[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx
+
+lockfile=/var/lock/subsys/nginx
+
+make_dirs() {
+   # make required directories
+   user=`$nginx -V 2&gt;&amp;1 | grep &quot;configure arguments:.*--user=&quot; | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`
+   if [ -n &quot;$user&quot; ]; then
+      if [ -z &quot;`grep $user /etc/passwd`&quot; ]; then
+         useradd -M -s /bin/nologin $user
+      fi
+      options=`$nginx -V 2&gt;&amp;1 | grep 'configure arguments:'`
+      for opt in $options; do
+          if [ `echo $opt | grep '.*-temp-path'` ]; then
+              value=`echo $opt | cut -d &quot;=&quot; -f 2`
+              if [ ! -d &quot;$value&quot; ]; then
+                  # echo &quot;creating&quot; $value
+                  mkdir -p $value &amp;&amp; chown -R $user $value
+              fi
+          fi
+       done
+    fi
+}
+
+start() {
+    [ -x $nginx ] || exit 5
+    [ -f $NGINX_CONF_FILE ] || exit 6
+    make_dirs
+    echo -n $&quot;Starting $prog: &quot;
+    daemon $nginx -c $NGINX_CONF_FILE
+    retval=$?
+    echo
+    [ $retval -eq 0 ] &amp;&amp; touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $&quot;Stopping $prog: &quot;
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] &amp;&amp; rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    configtest || return $?
+    stop
+    sleep 1
+    start
+}
+
+reload() {
+    configtest || return $?
+    echo -n $&quot;Reloading $prog: &quot;
+    killproc $nginx -HUP
+    RETVAL=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status &gt;/dev/null 2&gt;&amp;1
+}
+
+case &quot;$1&quot; in
+    start)
+        rh_status_q &amp;&amp; exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+            ;;
+    *)
+        echo $&quot;Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}&quot;
+        exit 2
+esac
+</code></pre>
+
+<p>设置文件执行权限</p>
+
+<pre><code>chmod a+x /etc/init.d/nginx
+</code></pre>
+
+<p>加入chkconfig管理列表</p>
+
+<pre><code>chkconfig --add /etc/init.d/nginx
+</code></pre>
+
+<p>开机启动</p>
+
+<pre><code>chkconfig nginx on
 </code></pre></li>
 
-<li><p>centos卷组扩展</p>
+<li><p>启动</p>
 
-<pre><code>pvs                         //查看物理卷列表
-vgs                         //查看卷组列表
-vgextend centos /dev/sda3   //centos卷组追加/dev/sda3物理卷
-</code></pre></li>
-
-<li><p>逻辑卷扩展</p>
-
-<pre><code>lvs                                         //逻辑卷列表
-lvextend -L +30G /dev/mapper/centos-root    //逻辑卷扩展大小 
-lvscan            //List all logical volumes in all volume groups
-xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
-</code></pre></li>
+<p>service nginx start</p></li>
 </ol>
+
+<p><strong>遇到的问题</strong></p>
+
+<blockquote>
+<p>1.非nginx目录下项目访问403</p>
+
+<p>fix: nginx.conf 修改启动用户为 root  root</p>
+
+<p>2.启动报错selinux</p>
+
+<p>fix: /var/cache/nginx清理</p>
+</blockquote>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/nginx/nginx-start/" title="nginx-start">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/java/alibaba-java/" title="alibaba-java">Next &rarr;</a></li>
+            <li class="next"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/" title="centos7 lvs扩容">Next &rarr;</a></li>
           
           
         </ul>
@@ -164,13 +313,13 @@ xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2017-05-05</span></div>
+    <div class="date"><span>2017-05-10</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#linux-ref">linux <span>1</span></a>
+  <a href="/categories/#%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE-ref">软件配置 <span>1</span></a>
 </li>
     
     </ul>
@@ -183,19 +332,11 @@ xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
 </li>
     
       <li>
-  <a href="/tags/#centos7-ref">centos7 <span>1</span></a>
+  <a href="/tags/#nginx-ref">nginx <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#lvs-ref">lvs <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#lvm-ref">lvm <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#fdisk-ref">fdisk <span>1</span></a>
+  <a href="/tags/#chkconfig-ref">chkconfig <span>1</span></a>
 </li>
     
     </ul>
