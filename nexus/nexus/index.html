@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>centos7 lvs扩容</title>
+    <title>nexus</title>
   
-    <meta name="description" content="centos7 lvs已挂载目录扩容">
+    <meta name="description" content="nexnus搭建maven私服配置导包">
   
     <meta name="author" content="Hao Wang">
 
@@ -80,49 +80,61 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>centos7 lvs扩容 </h1>
+  <h1>nexus </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>centos7 lvs扩容</h1>
+    <h1>nexnus搭建maven私服配置导包</h1>
+
+<h2>安装配置</h2>
 
 <ol>
-<li><p>创建新分区</p>
+<li><p>下载安装包</p>
 
-<pre><code>fdisk -l        //查看可用硬盘(如：sda)
-fdisk /dev/sda  
-n               //新增分区
-w               //保存操作
+<pre><code>sudo wget https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.3.1-01-unix.tar.gz
 </code></pre></li>
 
-<li><p>修改分区格式为lvm</p>
+<li><p>安装运行</p>
 
-<pre><code>fdisk /dev/sda
-t               //修改分区类型
-L               //显示分区类型表
-8e              //修改分区类型为lvm
-w               //保存修改
+<pre><code>tar zxvf nexus-3.3.1-01-unix.tar.gz 
+cd nexus-3.3.1-01/      
+nohup ./nexus run
 </code></pre></li>
 
-<li><p>创建物理卷</p>
+<li><p>maven setting.xml配置</p>
 
-<pre><code>pvcreate /dev/sda3 //创建物理卷sda3,最好重启一下
+<pre><code>&lt;servers&gt;
+    &lt;server&gt;  
+        &lt;id&gt;nexus&lt;/id&gt;  
+        &lt;username&gt;admin&lt;/username&gt;  
+        &lt;password&gt;admin123&lt;/password&gt;  
+    &lt;/server&gt;  
+&lt;/servers&gt;
 </code></pre></li>
 
-<li><p>centos卷组扩展</p>
+<li><p>pom.xml配置</p>
 
-<pre><code>pvs                         //查看物理卷列表
-vgs                         //查看卷组列表
-vgextend centos /dev/sda3   //centos卷组追加/dev/sda3物理卷
+<pre><code>&lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;nexus&lt;/id&gt;
+            &lt;name&gt;Team Nexus Repository&lt;/name&gt;
+            &lt;url&gt;http://10.2.6.1:8081/repository/maven-public/&lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+
+&lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+        &lt;id&gt;nexus&lt;/id&gt;
+        &lt;name&gt;Team Nexus Repository&lt;/name&gt;
+        &lt;url&gt;http://10.2.6.1:8081/repository/maven-public/&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+&lt;/pluginRepositories&gt;
 </code></pre></li>
 
-<li><p>逻辑卷扩展</p>
+<li><p>mvn deploy使用</p>
 
-<pre><code>lvs                                         //逻辑卷列表
-lvextend -L +30G /dev/mapper/centos-root    //逻辑卷扩展大小 
-lvscan            //List all logical volumes in all volume groups
-xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
+<pre><code>mvn deploy:deploy-file -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=${path/*.jar} -Durl=http://10.2.6.1:8081/repository/thirdparty/ -DrepositoryId=nexus 
 </code></pre></li>
 </ol>
 
@@ -131,14 +143,14 @@ xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
       <ul>
         <ul>
           
-            <li class="prev"><a href="/nexus/nexus/" title="nexus">&larr; Previous</a></li>
+            <li class="prev"><a href="/nginx/nginx-start/" title="nginx-start">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/java/alibaba-java/" title="alibaba-java">Next &rarr;</a></li>
+            <li class="next"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/" title="centos7 lvs扩容">Next &rarr;</a></li>
           
           
         </ul>
@@ -164,13 +176,13 @@ xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2017-05-05</span></div>
+    <div class="date"><span>2017-05-10</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#linux-ref">linux <span>1</span></a>
+  <a href="/categories/#nexus-ref">nexus <span>1</span></a>
 </li>
     
     </ul>
@@ -179,23 +191,11 @@ xfs_growfs /dev/mapper/centos-root          //扩展xfs文件系统大小
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#linux-ref">linux <span>2</span></a>
+  <a href="/tags/#nexus-ref">nexus <span>1</span></a>
 </li>
     
       <li>
-  <a href="/tags/#centos7-ref">centos7 <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#lvs-ref">lvs <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#lvm-ref">lvm <span>1</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#fdisk-ref">fdisk <span>1</span></a>
+  <a href="/tags/#maven-ref">maven <span>1</span></a>
 </li>
     
     </ul>

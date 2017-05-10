@@ -9,6 +9,11 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
+		<loc>http://sakyawang.github.io/nexus/nexus/</loc>
+		<lastmod>2017-05-10</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://sakyawang.github.io/linux/centos7-lvs%E6%89%A9%E5%AE%B9/</loc>
 		<lastmod>2017-05-05</lastmod>
 		<changefreq>weekly</changefreq>

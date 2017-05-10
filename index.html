@@ -129,6 +129,44 @@ enabled=1
 </div>
 
 <div class="post">
+  <h3 class="title"><a href="/nexus/nexus/">nexus</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>nexnus搭建maven私服配置导包</h1>
+
+<h2>安装配置</h2>
+
+<ol>
+<li><p>下载安装包</p>
+
+<pre><code>sudo wget https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.3.1-01-unix.tar.gz
+</code></pre></li>
+
+<li><p>安装运行</p>
+
+<pre><code>tar zxvf nexus-3.3.1-01-unix.tar.gz 
+cd nexus-3.3.1-01/      
+nohup ./nexus run
+</code></pre></li>
+
+<li><p>maven setting.xml配置</p>
+
+<pre><code>&lt;servers&gt;
+    &lt;server&gt;  
+        &lt;id&gt;nexus&lt;/id&gt;  
+        &lt;username&gt;admin&lt;/username&gt;  
+        &lt;password&gt;admin123&lt;/password&gt;  
+    &lt;/server&gt;  
+&lt;/servers&gt;
+</code></pre></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nexus/nexus/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/">centos7 lvs扩容</a> <span class="date">2017-05-05</span></h3>
 
   <h1>centos7 lvs扩容</h1>
@@ -378,38 +416,6 @@ w               //保存修改
 
   <div class="more">
     <a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/">post请求执行window open</a> <span class="date">2015-07-09</span></h3>
-
-  <h2>背景</h2>
-
-<p>一般在html中打开新页面都是直接使用window.open(url)，打开新的页面是get请求，如果url有参数的话URL就会很长，在浏览器上会有参数显示。这里使用post请求可以避免该问题。</p>
-
-<h2>处理方案</h2>
-
-<p>创建一个form表单method为post方式：</p>
-
-<pre><code>&lt;form action=&quot;&quot; method=&quot;post&quot; name=&quot;targetForm&quot; id=&quot;targetForm&quot; target=&quot;targetForm&quot; onsubmit=&quot;openWindow('targetForm');&quot;&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name1&quot; id=&quot;id1&quot;/&gt;
-    &lt;input type=&quot;hidden&quot; name=&quot;name2&quot; id=&quot;id2&quot;/&gt;
-&lt;/form&gt;
-</code></pre>
-
-<p>添加onsubmit事件，执行openWindow（），具体js函数如下：</p>
-
-<pre><code>function openWindow(name){    
-    window.open('about:blank',name);     
-}  
-</code></pre>
-
-<p>关键点是：</p>
-
-
-  <div class="more">
-    <a href="/javascript/post%E8%AF%B7%E6%B1%82%E6%89%A7%E8%A1%8Cwindow-open/" class="btn">read more..</a>
   </div>
 </div>
 
