@@ -167,6 +167,41 @@ nohup ./nexus run
 </div>
 
 <div class="post">
+  <h3 class="title"><a href="/nodejs/Centos7-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEelasticsearch-head/">Centos7 安装配置elasticsearch-head</a> <span class="date">2017-05-10</span></h3>
+
+  <h1>Centos7 安装配置elasticsearch-head</h1>
+
+<h2>安装nodejs</h2>
+
+<ol>
+<li><p>配置yum源</p>
+
+<pre><code>curl --silent --location https://rpm.nodesource.com/setup_7.x | bash -
+</code></pre></li>
+
+<li><p>安装nodejs和npm</p>
+
+<pre><code>yum install -y nodejs
+</code></pre></li>
+</ol>
+
+<h2>配置淘宝npm镜像</h2>
+
+<ol>
+<li><p>通过config命令</p>
+
+<pre><code>npm config set registry https://registry.npm.taobao.org 
+npm info underscore （如果上面配置正确这个命令会有字符串response）
+</code></pre></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/nodejs/Centos7-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEelasticsearch-head/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/linux/centos7-lvs%E6%89%A9%E5%AE%B9/">centos7 lvs扩容</a> <span class="date">2017-05-05</span></h3>
 
   <h1>centos7 lvs扩容</h1>
@@ -387,35 +422,6 @@ w               //保存修改
 
   <div class="more">
     <a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/">记一次处理http请求返回json数据中文乱码问题</a> <span class="date">2015-07-10</span></h3>
-
-  <h2>背景</h2>
-
-<p>项目中rest接口返回中文错误提示信息显示乱码。</p>
-
-<h2>环境</h2>
-
-<p>apache httpClient</p>
-
-<p>spring mvc</p>
-
-<p>tomcat</p>
-
-<h2>处理过程</h2>
-
-<h3>分析理清问题</h3>
-
-<p>接口部署在本地tomcat上时，使用Apache httpClient客户端访问无乱码。</p>
-
-<p>接口部署到服务器上的tomcat时，使用Apache httpClient客户端访问返回结果中文乱码。</p>
-
-
-  <div class="more">
-    <a href="/java/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86http%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9Ejson%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" class="btn">read more..</a>
   </div>
 </div>
 
