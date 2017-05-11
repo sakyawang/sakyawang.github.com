@@ -96,6 +96,37 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/java/rpc/">rpc</a> <span class="date">2017-05-11</span></h3>
+
+  <h1>基于jdk序列化和tcp的rpc调用</h1>
+
+<p><strong>RPC调用图</strong></p>
+
+<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/rpc.png" width = "800" height = "400" alt="rpc" align=center /></p>
+
+<p>1、2和服务注册未实现</p>
+
+<h2><strong>文件说明</strong></h2>
+
+<pre><code>AbstractService 抽象服务类
+RpcRequest      服务请求对象
+RpcResponse     服务返回结果对象
+
+RpcClient       rpc客户端
+RpcServer       rpc服务端
+
+UserService     用户服务
+User            用户对象
+UserParam       用户参数对象
+</code></pre>
+
+
+  <div class="more">
+    <a href="/java/rpc/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/nginx/nginx-start/">nginx-start</a> <span class="date">2017-05-10</span></h3>
 
   <h1>centos7下yum安装nginx并配置开机启动</h1>
@@ -363,65 +394,6 @@ w               //保存修改
 
   <div class="more">
     <a href="/markdown/%E4%BD%BF%E7%94%A8sublime-text2-%E7%BC%96%E8%BE%91markdown%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%87%BA%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/">markdown pad 生成带目录的html</a> <span class="date">2015-07-16</span></h3>
-
-  <h2>环境</h2>
-
-<p>win7、markdown pad 2</p>
-
-<h2>目的</h2>
-
-<p>使用markdown pad 2编辑生成wiki风格的接口文档</p>
-
-<h2>处理方案</h2>
-
-<p>使用markdown pad 2的导出功能和高级设置的Html head 编辑器功能。</p>
-
-<ul>
-<li>工具--&gt;选项--&gt;高级--&gt;Html head 编辑器</li>
-</ul>
-
-<p><img src="http://7xj99v.com1.z0.glb.clouddn.com/markdownpadconfig.png" alt="html head 编辑器" /></p>
-
-<ul>
-<li>打开编辑器</li>
-</ul>
-
-<p>输入：</p>
-
-<pre><code>&lt;script&gt;
-    document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
-        // 生成目录列表
-        var outline = document.createElement(&quot;ul&quot;);
-        outline.setAttribute(&quot;id&quot;, &quot;outline-list&quot;);
-        outline.style.cssText = &quot;border: 1px solid #ccc;&quot;;
-        document.body.insertBefore(outline, document.body.childNodes[0]);
-        // 获取所有标题
-        var headers = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
-        for (var i = 0; i &lt; headers.length; i++) {
-            var header = headers[i];
-            var hash = _hashCode(header.textContent);
-            // MarkdownPad2无法为中文header正确生成id，这里生成一个
-            header.setAttribute(&quot;id&quot;, header.tagName + hash);
-            // 找出它是H几，为后面前置空格准备
-            var prefix = parseInt(header.tagName.replace('H', ''), 10);
-            outline.appendChild(document.createElement(&quot;li&quot;));
-            var a = document.createElement(&quot;a&quot;);
-            // 为目录项设置链接
-            a.setAttribute(&quot;href&quot;, &quot;#&quot; + header.tagName + hash)
-            // 目录项文本前面放置对应的空格
-            a.innerHTML = new Array(prefix * 4).join('&amp;nbsp;') + header.textContent;
-            outline.lastChild.appendChild(a);
-        }
-</code></pre>
-
-
-  <div class="more">
-    <a href="/markdown/markdown-pad-%E7%94%9F%E6%88%90%E5%B8%A6%E7%9B%AE%E5%BD%95%E7%9A%84html/" class="btn">read more..</a>
   </div>
 </div>
 
