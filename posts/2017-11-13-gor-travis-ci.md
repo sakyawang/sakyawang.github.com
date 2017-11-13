@@ -62,9 +62,9 @@ after_script:
 
   - git init
 
-  - git config user.name "wanghao0319072@gmail.com"
+  - git config user.name "user@gmail.com"
 
-  - git config user.email "wanghao0319072@gmail.com"
+  - git config user.email "user@gmail.com"
 
   - git add .
 
