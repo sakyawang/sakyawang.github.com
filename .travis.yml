@@ -20,6 +20,8 @@ script:
 
 after_script:
 
+  - cp -rf CNAME ./compiled
+
   - cd compiled
 
   - git init
