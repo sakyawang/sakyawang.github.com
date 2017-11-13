@@ -1,0 +1,16 @@
+title : 王浩的小课桌
+tagline: Blog Tagline
+author : 
+  name : Hao Wang
+  email : wanghao0319072@gmail.com
+  github : sakyawang
+  twitter : username
+  feedburner : feedname
+
+navigation :
+  - archive.html
+  - tags.html
+  - categories.html
+  - pages.html
+  - about.md
+  
