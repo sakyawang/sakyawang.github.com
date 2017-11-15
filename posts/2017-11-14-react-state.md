@@ -6,9 +6,9 @@ categories: react
 
 tags:
 
- - react
- - lifecycle
- - state
+-react
+-lifecycle
+-state
 
 ---
 

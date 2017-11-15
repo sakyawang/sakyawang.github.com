@@ -6,9 +6,9 @@ categories: react
 
 tags:
 
- - react
- - list
- - keys
+-react
+-list
+-keys
 
 ---
 

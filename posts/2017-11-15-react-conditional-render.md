@@ -6,9 +6,9 @@ categories: react
 
 tags:
 
- - react
- - render
- - conditional
+-react
+-render
+-conditional
 
 ---
 
