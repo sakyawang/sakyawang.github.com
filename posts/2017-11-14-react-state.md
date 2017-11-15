@@ -335,4 +335,130 @@ this.state.comment = 'Hello';
 this.setState({comment: 'Hello'});
 ```
 
-唯一可以分配this.state的地方是构造函数。
+唯一可以分配`this.state`的地方是构造函数。
+
+## 状态更新可能是异步的
+
+React可能会将多个`setState()`调用批量处理为单个更新，以提高性能。
+
+由于`this.props`和`this.state`可能会异步更新，所以你不应该依靠它们的值来计算下一个状态。
+
+比如，下面的代码可能会更新出错：
+
+```js
+// Wrong
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+```
+
+为了解决这个问题，使用接受函数而不是对象的形式使用`setState()`。该函数将接收前一个状态作为第一个参数，并将更新应用时的`props`作为第二个参数：
+
+```js
+// Correct
+this.setState((prevState, props) => ({
+  counter: prevState.counter + props.increment
+}));
+```
+
+上面使用的是箭头函数表示法，当然普通的函数写法也是可以的：
+
+```js
+// Correct
+this.setState(function(prevState, props) {
+  return {
+    counter: prevState.counter + props.increment
+  };
+});
+```
+
+## 状态是合并更新的
+
+当调用`setState()`方法时，React会把传入的参数和原来的`state`进行合并。
+
+比如，你的状态可能包含几个独立变量：
+
+```js
+constructor(props) {
+  super(props);
+  this.state = {
+    posts: [],
+	comments: []
+  };
+}
+```
+
+然后你可以单独的调用`setState()`来更新它们：
+
+```js
+  componentDidMount() {
+    fetchPosts().then(response => {
+      this.setState({
+        posts: response.posts
+      });
+    });
+
+    fetchComments().then(response => {
+      this.setState({
+        comments: response.comments
+      });
+    });
+  }
+```
+
+合并是浅合并，所以`this.setState（{comments}）`表达式会保持`this.state.posts`不变，但会完全替换`this.state.comments`。
+
+## 数据流向下
+
+不论父组件还是子组件都不应该知道自身是有状态的还是无状态的，他们不应该关心自己是函数是组件还是类组件。
+
+这就是为什么状态经常被称为本地或封装。除了拥有和设置它的组件之外，任何组件都无法访问它。
+
+组件可以选择将其状态作为属性传递给其子组件：
+
+```js
+<h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+```
+
+着同样适用于自定义组件：
+
+```js
+<FormattedDate date={this.state.date} />
+```
+
+`FormattedDate`组件会通过`props`接收`date`，但是不会知道`date`是来自于`Clock`组件的`state`或者`props`，还是手动输入的：
+
+```js
+function FormattedDate(props) {
+  return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
+}
+```
+
+这通常叫做自顶向下或者单向数据流。任何状态总是属于某些特定组件，并且从该状态派生的任何数据或UI只能影响组件树中“在其下面”的组件。
+
+如果你把一个组件树想象为一个属性瀑布，每一个组件的状态就像二外的水源，它在任意点加入瀑布，顺着流下来。
+
+为了显示所有的组件都是独立的，我们创建一个有三个`Clock`组件组成的`App`组件：
+
+```js
+function App() {
+  return (
+    <div>
+      <Clock />
+      <Clock />
+      <Clock />
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+[demo](http://codepen.io/gaearon/pen/vXdGmd?editors=0010)
+
+我们可以看到每一个时钟都有自己的定时器并且独立的更新时间。
+
+在React应用程序中，无论组件是有状态的还是无状态的，都被认为是组件的实现细节，可能随时间而改变。您可以在有状态组件内使用无状态组件，反之亦然。
