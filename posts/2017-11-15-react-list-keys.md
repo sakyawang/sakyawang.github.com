@@ -138,3 +138,131 @@ const todoItems = todos.map((todo, index) =>
 
 ## 用键提取组件
 
+键只有在数组上下文中才有意义。
+
+比如，如果你抽取一个`ListItem`组件，应该在数组的`<ListItem />`元素上维护键，而不是在`<ListItem />`元素自身的`<li>`元素上维护键。
+
+错误使用键示例：
+
+```js
+function ListItem(props) {
+  const value = props.value;
+  return (
+    // Wrong! There is no need to specify the key here:
+    <li key={value.toString()}>
+      {value}
+    </li>
+  );
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Wrong! The key should have been specified here:
+    <ListItem value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+```
+
+正确使用键示例：
+
+```js
+function ListItem(props) {
+  // Correct! There is no need to specify the key here:
+  return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Correct! Key should be specified inside the array.
+    <ListItem key={number.toString()}
+              value={number} />
+
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+```
+
+[demo](https://codepen.io/gaearon/pen/ZXeOGM?editors=0010)
+
+一个好的经验法则是`map()`调用中的元素需要键。
+
+## 键在列表中必须是唯一的
+
+一个元素的键在元素数组中必须是唯一的。但是在全局范围不需要保证唯一性。当我们生成两个不同的数组时，我们可以使用相同的键：
+
+```js
+function Blog(props) {
+  const sidebar = (
+    <ul>
+      {props.posts.map((post) =>
+        <li key={post.id}>
+          {post.title}
+        </li>
+      )}
+    </ul>
+  );
+  const content = props.posts.map((post) =>
+    <div key={post.id}>
+      <h3>{post.title}</h3>
+      <p>{post.content}</p>
+    </div>
+  );
+  return (
+    <div>
+      {sidebar}
+      <hr />
+      {content}
+    </div>
+  );
+}
+
+const posts = [
+  {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+];
+ReactDOM.render(
+  <Blog posts={posts} />,
+  document.getElementById('root')
+);
+```
+
+[demo](https://codepen.io/gaearon/pen/NRZYGN?editors=0010)
+
+键可以作为React的提示，但不会传递给组件。如果您的组件中需要相同的值，请将其明确传递为具有不同名称的属性：
+
+```js
+const content = posts.map((post) =>
+  <Post
+    key={post.id}
+    id={post.id}
+    title={post.title} />
+);
+```
+
+上面的例子中，`Post`组件可以读取`props.id`而不能读取`props.key`。
+
+## 在JSX中嵌入`map()`
+
