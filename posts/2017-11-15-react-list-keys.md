@@ -266,3 +266,39 @@ const content = posts.map((post) =>
 
 ## 在JSX中嵌入`map()`
 
+在上面的例子中我们声明了一个`listItems`变量,并在JSX中使用：
+
+```js
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <ListItem key={number.toString()}
+              value={number} />
+
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+```
+
+JSX允许在大括号中嵌入任何表达式，所以我们可以内联`map()`返回值：
+
+```js
+function NumberList(props) {
+  const numbers = props.numbers;
+  return (
+    <ul>
+      {numbers.map((number) =>
+        <ListItem key={number.toString()}
+                  value={number} />
+
+      )}
+    </ul>
+  );
+}
+```
+
+[demo](https://codepen.io/gaearon/pen/BLvYrB?editors=0010)
