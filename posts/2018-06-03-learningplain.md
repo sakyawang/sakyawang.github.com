@@ -1,11 +1,16 @@
 ---
 title: 学习计划.md
 date: '2018-05-31'
-description:
-categories:
+description: 复习计划
+categories: learn
 
 tags:
 
+- 学习
+- 计划
+- 复习
+- learn
+- 总结
 ---
 
 ## JAVA基础
