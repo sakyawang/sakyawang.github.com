@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>React元素渲染</title>
+  
+    <meta name="description" content="React元素渲染">
+  
+    <meta name="author" content="Hao Wang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Sakyawang</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>React元素渲染 </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <h1>React元素渲染</h1>
+
+<p><strong>元素是React应用的最小构成单元。</strong></p>
+
+<p>一个元素就是用来描述你想在屏幕上看到的内容：</p>
+
+<pre><code class="language-js">const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
+</code></pre>
+
+<p>与浏览器的DOM元素不同，React元素是普通的对象，创建起来代价很小。React DOM负责更新DOM以匹配React元素。</p>
+
+<blockquote>
+<p><strong>注意：</strong>
+人们可能会将元素与更广为人知的“组件”概念混为一谈。元素是由组件组合而成的。</p>
+</blockquote>
+
+<h2>渲染元素到DOM中</h2>
+
+<p>假设你的html文件中有一个<code>&lt;div&gt;</code>元素：</p>
+
+<pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+</code></pre>
+
+<p>我们称之为“根”DOM节点，因为它内部的一切都将由React DOM进行管理。</p>
+
+<p>使用React构建的应用程序通常只有一个根DOM节点。如果你将React集成到现有的应用程序中，则可以拥有尽可能多的隔离根DOM节点。</p>
+
+<p>要将React元素渲染到根DOM节点，要把根节点和React元素都传递给<code>ReactDOM.render()</code>：</p>
+
+<pre><code class="language-js">const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+</code></pre>
+
+<h2>更新已渲染元素</h2>
+
+<p>React元素是不可变的。一旦创建了一个元素，就不能更改其子元素或属性。一个元素就像电影中的某一帧：它代表了某个时间点的UI。</p>
+
+<p>更新UI的唯一方法是创建一个新元素，并将其传递给<code>ReactDOM.render()</code>。</p>
+
+<p>思考下面这个时钟的例子：</p>
+
+<pre><code class="language-js">function tick() {
+  const element = (
+    &lt;div&gt;
+      &lt;h1&gt;Hello, world!&lt;/h1&gt;
+      &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt;
+    &lt;/div&gt;
+  );
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
+</code></pre>
+
+<p>它每秒从一个<code>setInterval()</code>回调中调用<code>ReactDOM.render()</code>。</p>
+
+<h2>React只更新必要的内容</h2>
+
+<p>React DOM将元素及其子元素与元素之前的状态进行比较，仅更新必要的DOM到指定的状态。</p>
+
+<p>可以通过chrome控制台查看<a href="http://codepen.io/gaearon/pen/gwoJZk?editors=0010">例子</a>。</p>
+
+<p><img src="https://reactjs.org/c158617ed7cc0eac8f58330e49e48224.gif" alt="demo" /></p>
+
+<p>尽管我们创建了一个描述整个UI树的元素，但是只有内容改变的文本节点被React DOM更新了。</p>
+
+<blockquote>
+<p>In our experience, thinking about how the UI should look at any given moment rather than how to change it over time eliminates a whole class of bugs.</p>
+</blockquote>
+
+<p>我们应该关注在某个时间点UI该是什么样子，而不是随着时间改变UI。</p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/react/react-state-lifecycle/" title="react-state-lifecycle">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/react/JSX%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/" title="JSX简单说明">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2017-11-13</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#react-ref">react <span>8</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#react-ref">react <span>9</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#%2C-ref">, <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#js-ref">js <span>1</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; Hao Wang 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

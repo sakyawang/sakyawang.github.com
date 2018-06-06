@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Taiga环境搭建</title>
+  
+    <meta name="description" content="Taiga环境搭建">
+  
+    <meta name="author" content="Hao Wang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Sakyawang</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>Taiga环境搭建 </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <h1>Taiga环境搭建</h1>
+
+<h2>环境配置</h2>
+
+<pre><code>unbuntu 16.4 
+taiga stable
+</code></pre>
+
+<h2>安装</h2>
+
+<ol>
+<li><p>创建taiga用户</p>
+
+<pre><code>sudo adduser taiga
+sudo adduser taiga sudo
+sudo su taiga
+</code></pre></li>
+
+<li><p>安装依赖软件</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-dev
+sudo apt-get install -y libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev
+sudo apt-get install -y automake libtool libffi-dev curl git tmux gettext
+sudo apt-get install -y nginx
+sudo apt-get install -y rabbitmq-server redis-server
+sudo apt-get install -y circus
+
+sudo apt-get install -y postgresql-9.5 postgresql-contrib-9.5
+sudo apt-get install -y postgresql-doc-9.5 postgresql-server-dev-9.5
+
+sudo apt-get install -y python3 python3-pip python-dev python3-dev python-pip virtualenvwrapper
+sudo apt-get install -y libxml2-dev libxslt-dev
+sudo apt-get install -y libssl-dev libffi-dev
+</code></pre></li>
+
+<li><p>初始化postgresql</p>
+
+<pre><code>sudo -u postgres createuser taiga
+sudo -u postgres createdb taiga -O taiga --encoding='utf-8' --locale=en_US.utf8 --template=template0
+</code></pre></li>
+
+<li><p>初始化RabbitMQ</p>
+
+<pre><code>sudo rabbitmqctl add_user taiga PASSWORD_FOR_EVENTS
+sudo rabbitmqctl add_vhost taiga
+sudo rabbitmqctl set_permissions -p taiga taiga &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+</code></pre></li>
+
+<li><p>创建日志目录</p>
+
+<pre><code>mkdir -p ~/logs
+</code></pre></li>
+
+<li><p>Taiga backend安装配置</p>
+
+<pre><code>## 下载代码切换分支
+cd ~
+git clone https://github.com/taigaio/taiga-back.git taiga-back
+cd taiga-back
+git checkout stable
+
+## 创建python虚拟环境 
+mkvirtualenv -p /usr/bin/python3.5 taiga
+
+## 安装依赖
+pip install -r requirements.txt
+
+## 初始化数据库（默认用户 admin/123123）
+python manage.py migrate --noinput
+python manage.py loaddata initial_user
+python manage.py loaddata initial_project_templates
+python manage.py compilemessages
+python manage.py collectstatic --noinput
+
+## 配置~/taiga-back/settings/local.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'taiga',
+        'USER': 'taiga',
+        'PASSWORD': 'Cloudmap123',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+SITES = {
+    &quot;api&quot;: {
+       &quot;scheme&quot;: &quot;http&quot;,
+       &quot;domain&quot;: &quot;10.2.0.6:8000&quot;,
+       &quot;name&quot;: &quot;api&quot;
+    },
+    &quot;front&quot;: {
+       &quot;scheme&quot;: &quot;http&quot;,
+       &quot;domain&quot;: &quot;10.2.0.6:9001&quot;,
+       &quot;name&quot;: &quot;front&quot;
+    }
+}
+
+## 配置~/taiga-back/settings/common.py
+LANGUAGE_CODE = 'zh-hans'  # 修改默认语言为简体中文
+
+MEDIA_URL = &quot;http://10.2.0.6/media/&quot; # 解决wen界面用户头像url异常为：localhost:8000
+STATIC_URL = &quot;http://10.2.0.6/static/&quot; # 解决后台管理系统样式丢失
+
+## 配置事件连接秘钥，值取taiga-event的config.json中的secret
+SECRET_KEY = &quot;aw3+t2r(8(0kkrhg8)gx6i96v5^kv%6cfep9wxfom0%7dy0m9e&quot;
+
+## 验证配置
+workon taiga
+python manage.py runserver
+# 访问 http://localhost:8000/api/v1/ 有数据返回
+</code></pre></li>
+
+<li><p>Taiga frontend安装配置</p>
+
+<pre><code>## 下载代码切换分支
+cd ~
+git clone https://github.com/taigaio/taiga-front-dist.git taiga-front-dist
+cd taiga-front-dist
+git checkout stable
+
+## 创建配置文件修改配置
+cp ~/taiga-front-dist/dist/conf.example.json ~/taiga-front-dist/dist/conf.json
+
+{
+    &quot;api&quot;: &quot;http://10.2.0.6/api/v1/&quot;,
+    &quot;eventsUrl&quot;: &quot;ws://10.2.0.6/events&quot;,
+    &quot;eventsMaxMissedHeartbeats&quot;: 5,
+    &quot;eventsHeartbeatIntervalTime&quot;: 60000,
+    &quot;eventsReconnectTryInterval&quot;: 10000,
+    &quot;debug&quot;: true,
+    &quot;debugInfo&quot;: false,
+    &quot;defaultLanguage&quot;: &quot;zh-hans&quot;, /**修改默认语言为中文简体**/
+    &quot;themes&quot;: [&quot;taiga&quot;],
+    &quot;defaultTheme&quot;: &quot;taiga&quot;,
+    &quot;publicRegisterEnabled&quot;: false,
+    &quot;feedbackEnabled&quot;: true,
+    &quot;supportUrl&quot;: &quot;https://tree.taiga.io/support&quot;,
+    &quot;privacyPolicyUrl&quot;: null,
+    &quot;termsOfServiceUrl&quot;: null,
+    &quot;maxUploadFileSize&quot;: null,
+    &quot;contribPlugins&quot;: [],
+    &quot;tribeHost&quot;: null,
+    &quot;importers&quot;: [],
+    &quot;gravatar&quot;: true
+}
+</code></pre></li>
+
+<li><p>Taiga event安装配置（可选，用来做消息通知）</p>
+
+<pre><code>## 下载代码
+cd ~
+git clone https://github.com/taigaio/taiga-events.git taiga-events
+cd taiga-events
+
+## 安装nodejs、npm
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
+
+## 修改nodejs服务为node，解决npm install找不到node服务异常
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+## 安装项目nodejs模块依赖
+npm install
+sudo npm install -g coffee-script
+
+## 创建配置文件修改配置
+cp config.example.json config.json
+
+{
+    &quot;url&quot;: &quot;amqp://taiga:cloudmap@localhost:5672/taiga&quot;, /**用户名密码为第四步初始化rabbitmq时设置的**/
+    &quot;secret&quot;: &quot;aw3+t2r(8(0kkrhg8)gx6i96v5^kv%6cfep9wxfom0%7dy0m9e&quot;,/**配置事件连接秘钥，值和taiga-ebackend的ccommon.py的SECRET_KEY一致**/
+    &quot;webSocketServer&quot;: {
+        &quot;port&quot;: 8888
+    }
+}
+
+## 添加配置到circus中/etc/circus/conf.d/taiga-events.ini
+[watcher:taiga-events]
+working_dir = /home/taiga/taiga-events
+cmd = /usr/local/bin/coffee
+args = index.coffee
+uid = taiga
+numprocesses = 1
+autostart = true
+send_hup = true
+stdout_stream.class = FileStream
+stdout_stream.filename = /home/taiga/logs/taigaevents.stdout.log
+stdout_stream.max_bytes = 10485760
+stdout_stream.backup_count = 12
+stderr_stream.class = FileStream
+stderr_stream.filename = /home/taiga/logs/taigaevents.stderr.log
+stderr_stream.max_bytes = 10485760
+stderr_stream.backup_count = 12
+
+## 重启circusd服务，查看状态 
+sudo service circusd restart
+sudo service circusd status                            
+</code></pre></li>
+
+<li><p>配置taiga启动服务</p>
+
+<pre><code>## 初始化Taiga的circus配置/etc/circus/conf.d/taiga.ini
+[watcher:taiga]
+working_dir = /home/taiga/taiga-back
+cmd = gunicorn
+args = -w 3 -t 60 --pythonpath=. -b 127.0.0.1:8001 taiga.wsgi
+uid = taiga
+numprocesses = 1
+autostart = true
+send_hup = true
+stdout_stream.class = FileStream
+stdout_stream.filename = /home/taiga/logs/gunicorn.stdout.log
+stdout_stream.max_bytes = 10485760
+stdout_stream.backup_count = 4
+stderr_stream.class = FileStream
+stderr_stream.filename = /home/taiga/logs/gunicorn.stderr.log
+stderr_stream.max_bytes = 10485760
+stderr_stream.backup_count = 4
+
+[env:taiga]
+PATH = /home/taiga/.virtualenvs/taiga/bin:$PATH
+TERM=rxvt-256color
+SHELL=/bin/bash
+USER=taiga
+LANG=en_US.UTF-8
+HOME=/home/taiga
+PYTHONPATH=/home/taiga/.virtualenvs/taiga/lib/python3.5/site-packages
+
+## 重启circusd服务并验证
+sudo service circusd restart    
+circusctl status
+</code></pre></li>
+
+<li><p>配置nginx</p>
+
+<pre><code>## 移除默认配置避免和taiga冲突
+sudo rm /etc/nginx/sites-enabled/default
+
+## 配置/etc/nginx/conf.d/taiga.conf
+server {
+    listen 80 default_server;
+    server_name _;
+
+    large_client_header_buffers 4 32k;
+    client_max_body_size 50M;
+    charset utf-8;
+
+    access_log /home/taiga/logs/nginx.access.log;
+    error_log /home/taiga/logs/nginx.error.log;
+
+    # Frontend
+    location / {
+        root /home/taiga/taiga-front-dist/dist/;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Backend
+    location /api {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://127.0.0.1:8001/api;
+        proxy_redirect off;
+    }
+
+    # Django admin access (/admin/)
+    location /admin {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://127.0.0.1:8001$request_uri;
+        proxy_redirect off;
+    }
+
+    # Static files
+    location /static {
+        alias /home/taiga/taiga-back/static;
+    }
+
+    # Media files
+    location /media {
+        alias /home/taiga/taiga-back/media;
+    }
+
+    # Taiga-events
+    location /events {
+        proxy_pass http://127.0.0.1:8888/events;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &quot;upgrade&quot;;
+        proxy_connect_timeout 7d;
+        proxy_send_timeout 7d;
+        proxy_read_timeout 7d;
+    }
+}
+
+## 验证配置文件
+sudo nginx -t
+
+## 重启nginx
+sudo service nginx restart
+</code></pre></li>
+</ol>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/learn/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92.md/" title="学习计划.md">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/react/%E5%AD%A6%E4%B9%A0React-Redux%EF%BC%88%E8%AF%91%E6%96%87%EF%BC%89/" title="学习React Redux（译文）">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2018-04-23</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#soft-ref">soft <span>1</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#scrum-ref">scrum <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#%E6%95%8F%E6%8D%B7-ref">敏捷 <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#taiga-ref">taiga <span>1</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; Hao Wang 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
