@@ -46,8 +46,8 @@ tags:
 ## 网络
 
 - [ ] 基础
-    - [ ] CIDR 
-- [ ] 图解HTTP
+    - [x] CIDR 
+- [x] 图解HTTP
 - [ ] TCP/IP 卷一 卷二
 - [ ] 计算机网络 自顶向下
 - [ ] HTTP权威指南
