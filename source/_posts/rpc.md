@@ -1,5 +1,5 @@
 ---
-title: rpc
+title: 基于jdk序列化和tcp的rpc调用
 date: '2017-05-11'
 description: 基于jdk序列化和tcp的rpc调用
 categories:

@@ -1,5 +1,5 @@
 ---
-title: react_components_props   
+title: React组件和属性
 
 date: '2017-11-14'
 

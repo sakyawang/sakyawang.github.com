@@ -1,5 +1,5 @@
 ---
-title: react-lifting-state-up
+title: React提升状态
 date: '2017-11-15'
 description: 提升状态
 categories:

@@ -1,5 +1,5 @@
 ---
-title: gor-travis-ci
+title: travis-ci自动编译github page
 date: '2017-11-13'
 description: 使用travis-ci自动编译github page
 categories:

@@ -1,5 +1,5 @@
 ---
-title: nexus
+title: nexnus搭建maven私服配置导包
 date: '2017-05-10'
 description: nexnus搭建maven私服配置导包
 categories: 

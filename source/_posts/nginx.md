@@ -1,5 +1,5 @@
 ---
-title: nginx-start
+title: entos7 下yum安装nginx并配置开机启动
 date: '2017-05-10'
 description: centos7 下yum安装nginx并配置开机启动
 categories:

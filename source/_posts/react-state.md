@@ -1,5 +1,5 @@
 ---
-title: react-state-lifecycle
+title: React状态和生命周期
 date: '2017-11-14'
 description: React状态和生命周期
 categories: 
