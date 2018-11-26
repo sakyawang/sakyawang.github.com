@@ -44,6 +44,10 @@ tags:
     # reload
     source ~/.bashrc
     ```
+* 安装xelatex支持中文
+    ```shell
+    sudo apt install xelatex
+    ```
 
 ## 使用
 
