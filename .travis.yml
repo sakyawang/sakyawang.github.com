@@ -35,7 +35,7 @@ script:
 
 after_script:
 
-# - cp -rf CNAME ./public
+  - cp -rf CNAME ./public
 
   - cp -rf google5ecb77d99c95160a.html ./public   
 
