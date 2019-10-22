@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react,redux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习React Redux（译文）">
+<meta name="keywords" content="react,redux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习React Redux（译文）">
+<meta property="og:url" content="http://sakyawang.me/2018/04/23/react-redux/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="学习React Redux（译文）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-01.svg">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-02.svg">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-03.svg">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-04.svg">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-05.svg">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-06.svg">
+<meta property="og:image" content="https://raw.githubusercontent.com/bradwestfall/CSS-Tricks-React-Series/master/guide-3-redux/docs/preview.gif">
+<meta property="og:updated_time" content="2019-10-22T01:56:36.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习React Redux（译文）">
+<meta name="twitter:description" content="学习React Redux（译文）">
+<meta name="twitter:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-01.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sakyawang.me/2018/04/23/react-redux/">
+
+
+
+
+
+  <title>学习React Redux（译文） | 编程私厨</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">编程私厨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sakyawang.me/2018/04/23/react-redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SakyaWang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="编程私厨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习React Redux（译文）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T00:00:00+00:00">
+                2018-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  学习React Redux（译文）
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://css-tricks.com/learning-react-redux/" target="_blank" rel="noopener">原文</a></p>
+<p>Redux是一个在js应用中用来管理数据状态和UI状态的工具。对于管理随着时间的推移而变得复杂的单页应用程序（SPA）来说，它非常理想。它是框架无关的，虽然它由React编写，但是它同样可以在Anjular或者jQuery应用中使用。</p>
+<p>此外，它是从一个“时间旅行”的实验中构思出来的 - 事实是，我们将在以后做到这一点！</p>
+<p>正如我们之前的教程所见到的，React通过组件流转数据。进一步说，称之为“单向数据流”–数据从父组件流向子组件。因为这个特性，两个非父子关系的组件如何在React中进行通信并不明显：<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-01.svg" alt="flow"></p>
+<p>React不建议以这种方式直接进行组件间通信。即使它确实有支持这种方法的能力，但它被认为是很糟糕的做法，因为直接的组件间通信很容易出错，并导致意大利面代码 - 一个难以遵循的旧代码术语。</p>
+<p>React提供了一个建议，但他们希望你自己实现它。下面是React文档的一部分节选：</p>
+<blockquote>
+<p> 对于两个没有父子关系的组件之间的通信，你可以设置自己的全局事件系统。Flux模式是一个可行的方案。</p>
+</blockquote>
+<p>这就是Redux的用武之地。Redux提供了将所有应用程序状态存储在一个地方的解决方案，称为“存储”。组件然后将状态更改“分派”给存储，而不是直接传递给其他组件。需要了解状态更改的组件可以“订阅”存储：<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-02.svg" alt="redux"></p>
+<p>存储可以被认为是应用中所有状态变化的“中间人”。因为Redux的参与，组件之间不直接通信，而是所有的状态变换都要通过存储这个单一数据源。</p>
+<p>这与部分应用程序直接相互通信的其他策略有很大不同。有时候，这些策略被认为是容易出错和混淆的原因如下：<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-03.svg" alt="other"></p>
+<p>显而易见，借助Redux，所有组件都可以从商店获取其状态。同样清楚的是，组件应该发送状态更改 - 也就是存储。发起更改的组件只需要关注将更改分派给存储，而不必担心需要状态更改的其他组件。这就是Redux如何使数据流更易于推理。</p>
+<p>使用存储来协调应用状态的概念就是Flux模式。这是一种设计模式，可以像React一样支持单向数据流体系结构。Redux很像Flux，但是它们有多相似呢？</p>
+<h2 id="Redux-是类Flux"><a href="#Redux-是类Flux" class="headerlink" title="Redux 是类Flux"></a>Redux 是类Flux</h2><p>Flux是一种模式，而不是类似Redux的工具，所以它不是你可以下载的东西。Redux是一个受Flux模式启发的工具，还包括其他的东西比如Elm。有很多比较Redux和Flux的指南。他们中的大多数人会得出结论，Redux是Flux或者是类似Flux的，这取决于我们如何严格定义Flux的规则。最终，这并不重要。Facebook非常喜欢并支持Redux，因此他们聘请了其主要开发人员Dan Abramov。</p>
+<p>本文假定您不熟悉Flux模式。但如果你是，你会发现一些小的差异，特别是Redux的三大指导原则：</p>
+<h3 id="1-真相的唯一来源"><a href="#1-真相的唯一来源" class="headerlink" title="1. 真相的唯一来源"></a>1. 真相的唯一来源</h3><p>Redux仅为其所有应用程序状态使用一个存储。由于所有状态都驻留在一个地方，Redux称这是真相的唯一来源。</p>
+<p>存储的数据结构最终取决于您，但在实际应用程序中它通常是一个深层嵌套对象。</p>
+<p>Redux的这种单存储方法是它与Flux的多存储方法之间的主要区别之一。</p>
+<h3 id="2-状态是只读的"><a href="#2-状态是只读的" class="headerlink" title="2. 状态是只读的"></a>2. 状态是只读的</h3><p>根据Redux的文档，“改变状态的唯一途径就是发出一个描述是发生了何事的动作对象”。</p>
+<p>这就意味着应用不能直接修改状态。相反，“动作”是被分发用来改变存储中的状态。</p>
+<p>存储对象自身有一个包含四个方法的API：</p>
+<ul>
+<li>store.dispatch(action)</li>
+<li>store.subscribe(listener)</li>
+<li>store.getState()</li>
+<li>replaceReducer(nextReducer)</li>
+</ul>
+<p>如你所见，没有设置状态的方法。因此，分发一个动作是应用代码表示状态变换的唯一途径：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> action = &#123;</span><br><span class="line">  type: <span class="string">'ADD_USER'</span>,</span><br><span class="line">  user: &#123;<span class="attr">name</span>: <span class="string">'Dan'</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Assuming a store object has been created already</span></span><br><span class="line">store.dispatch(action);</span><br></pre></td></tr></table></figure>
+<p><code>dispatch()</code>方法发送一个动作对象给Redux。这个动作可以被描述为一个“有效载荷”，它携带一个<code>type</code>和用来更新状态的所有其他数据 - 上面例子中式用户信息。请记住，在<code>type</code>属性之后，操作对象的设计取决于您。</p>
+<h3 id="3-使用纯函数进行更改状态"><a href="#3-使用纯函数进行更改状态" class="headerlink" title="3. 使用纯函数进行更改状态"></a>3. 使用纯函数进行更改状态</h3><p>如上所述，Redux不允许应用程序直接更改状态。相反，分发的动作“描述”状态变化和改变状态的意图。Reducers是您编写的处理调度动作并可以实际更改状态的函数。</p>
+<p>一个reducer将当前状态作为参数，并且只能通过返回新状态来修改状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Reducer Function</span></span><br><span class="line"><span class="keyword">var</span> someReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Reducers应该是“纯函数”，“纯函数”是具有以下特征的功能的函数：</p>
+<ul>
+<li>它不会进行外部网络或数据库调用</li>
+<li>其返回值完全取决于其参数的值</li>
+<li>参数应该被认为是“不可变的”，这意味着它们不应该改变。</li>
+<li>使用同一组参数调用纯函数将始终返回相同的值。</li>
+</ul>
+<p>他们之所以被称为“纯粹”是因为它们什么都不做只根据参数返回基于参数的结果。他们对系统的任何其他部分没有副作用。</p>
+<h2 id="我们第一个Redux存储"><a href="#我们第一个Redux存储" class="headerlink" title="我们第一个Redux存储"></a>我们第一个Redux存储</h2><p>首先，使用<code>Redux.createStore()</code>创建一个存储，并将所有reducer作为参数传递。我们来看一下只有一个reducer的简单例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Note that using .push() in this way isn't the</span></span><br><span class="line"><span class="comment">// best approach. It's just the easiest to show</span></span><br><span class="line"><span class="comment">// for this example. We'll explain why in the next section.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// The Reducer Function</span></span><br><span class="line"><span class="keyword">var</span> userReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (state === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    state = [];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (action.type === <span class="string">'ADD_USER'</span>) &#123;</span><br><span class="line">    state.push(action.user);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a store by passing in the reducer</span></span><br><span class="line"><span class="keyword">var</span> store = Redux.createStore(userReducer);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Dispatch our first action to express an intent to change the state</span></span><br><span class="line">store.dispatch(&#123;</span><br><span class="line">  type: <span class="string">'ADD_USER'</span>,</span><br><span class="line">  user: &#123;<span class="attr">name</span>: <span class="string">'Dan'</span>&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>下面是代码的简要说明：</p>
+<ol>
+<li>存储创建附带一个reducer</li>
+<li>reducer初始化存储为一个空数组。</li>
+<li>动作分发创建一个用户</li>
+<li>reducer添加用户用到state更新存储并返回。</li>
+</ol>
+<p><strong>reducer被调用了两次</strong>–一次是在存储创建的时候，然后分发之后又调用了执行了。</p>
+<p>当存储被创建，Redux立即调用reducers并使用它们的返回值作为初始化状态。第一次调用reducer返回<code>undefined</code>给状态。Reducer代码预计到这一点，并返回一个空数组来初始化存储的初始状态。每次调度动作时也会调用reducer。由于从reducer返回的状态将成为我们在存储中的新状态，<strong>Redux总是期望reducer返回状态。</strong></p>
+<p>在这个例子中，在分发之后第二次调用reducer。请记住，分派的动作描述了更改状态的意图，并且通常会携带新状态的数据。这一次，Redux将当前状态（仍是一个空数组）与action对象一起传递给reducer。动作对象现在具有<code>ADD_USER</code>类型属性，让reducer知道如何更改状态。</p>
+<p>很容易将reducer想象为允许状态通过的漏斗。这是因为reducers总是收到并返回状态以更新存储：<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-04.svg" alt="reducers"></p>
+<p>基于该示例，我们的存储现在将成为一个包含一个用户对象的数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.getState();   <span class="comment">// =&gt; [&#123;name: 'Dan'&#125;]</span></span><br></pre></td></tr></table></figure>
+<h2 id="不要变动状态，拷贝它"><a href="#不要变动状态，拷贝它" class="headerlink" title="不要变动状态，拷贝它"></a>不要变动状态，拷贝它</h2><p>虽然我们例子中的reducer在技术上起作用，但它改变状态这种做法很差的方式。尽管reducer负责改变状态，但不应该直接改变“当前状态”参数。这就是为什么我们不应该在reducer的状态参数中使用<code>.push（）</code>这种突变方法。</p>
+<p>传递给reducer的参数应该被认为是不可变的。换句话说，他们不能被直接修改。相比直接修改，我们可以使用<code>.concat()</code>这样的非变异方法来克隆一个数组，然后我们改变克隆的数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state = [], action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (action.type === <span class="string">'ADD_USER'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> newState = state.concat([action.user]);</span><br><span class="line">    <span class="keyword">return</span> newState;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过对reducer的更新，添加新用户会更改并返回状态参数的副本。不添加新用户时，请注意返回原始状态而不是创建副本。</p>
+<p>下面有关于不可变数据结构的一节介绍了这些类型的最佳实践。</p>
+<p>您可能还注意到，现在初始状态来自ES2015默认参数。到目前为止，在本系列中，我们避免了ES2015让您专注于主要主题。但是，Redux在ES2015上更加出色。因此，我们会在本文中开始使用ES2015。不要担心，每次使用新的ES2015功能时，都会指出并解释。</p>
+<h2 id="多Reducer"><a href="#多Reducer" class="headerlink" title="多Reducer"></a>多Reducer</h2><p>最后一个例子是一个很好的入门，但是大多数应用程序在整个应用程序中需要更复杂的状态。由于Redux只使用一个存储，因此我们需要使用嵌套对象将状态组织到不同的部分。让我们想象我们希望我们的存储类似于这个对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  userState: &#123; ... &#125;,</span><br><span class="line">  widgetState: &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于整个应用程序来说，它仍然是“一个存储=一个对象”，但它具有可以包含各种数据的<code>userState</code>和<code>widgetState</code>的嵌套对象。这可能看起来过于简单化，但实际上它与真正的Redux存储相去不远。为了使用嵌套对象创建存储，我们需要用reducer定义每个部分：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, combineReducers &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The User Reducer</span></span><br><span class="line"><span class="keyword">const</span> userReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state = &#123;&#125;, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The Widget Reducer</span></span><br><span class="line"><span class="keyword">const</span> widgetReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state = &#123;&#125;, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Combine Reducers</span></span><br><span class="line"><span class="keyword">const</span> reducers = combineReducers(&#123;</span><br><span class="line">  userState: userReducer,</span><br><span class="line">  widgetState: widgetReducer</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(reducers);</span><br></pre></td></tr></table></figure>
+<p><code>combineReducers（）</code>允许我们根据不同的逻辑部分来描述我们的存储，并将reducer分配给每个部分。现在，当每个reducer返回初始状态时，该状态将进入其各自的<code>storeState</code>或<code>widgetState</code>部分。</p>
+<p>值得注意的是，现在，每个reducer都会通过其整体状态的各个子部分，而不是整个存储的状态值，就像one-reducer示例一样。然后从每个reducer返回的状态适用于其子部分。</p>
+<h2 id="分发行动之后调用哪个reducer"><a href="#分发行动之后调用哪个reducer" class="headerlink" title="分发行动之后调用哪个reducer"></a>分发行动之后调用哪个reducer</h2><p>所有的reducers。如果我们认为每次发布操作时都会将reducer与漏斗进行比较，那么所有reducer都将被调用，并且将有机会更新其各自的状态：<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-05.svg" alt="dispatch"></p>
+<p>我仔细地说“他们的”状态，因为reducer的“当前状态”参数及其返回的“更新后的”状态仅影响存储的reducer的部分。请记住，正如前一节所述，每个reducer只能通过其各自的状态，而不是整个状态。</p>
+<h2 id="动作策略"><a href="#动作策略" class="headerlink" title="动作策略"></a>动作策略</h2><p>实际上有很多创建和管理动作和动作类型的策略。虽然他们很好，但并不像本文中的其他信息那么重要。为了保持文章更短，我们已经记录了你该知道的基本策略在<a href="https://github.com/bradwestfall/CSS-Tricks-React-Series/blob/master/guide-3-redux/docs/action-strategies.md" target="_blank" rel="noopener">github仓库</a>。</p>
+<h2 id="不可变数据结构"><a href="#不可变数据结构" class="headerlink" title="不可变数据结构"></a>不可变数据结构</h2><blockquote>
+<p>状态的结构取决于你：它可以是一个原始结构，一个数组，一个对象或者甚至是一个Immutable.js 数据结构。唯一重要的部分是“你不能改变状态对象，而是返回一个新的状态变更后的状态对象”–<a href="https://github.com/reactjs/redux#the-gist" target="_blank" rel="noopener">Redux docs</a></p>
+</blockquote>
+<p>该声明说了很多,同时我们已经在本教程中提到了这一点。我只会强调一些要点。</p>
+<p>首先：</p>
+<ul>
+<li>js原始数据类型（Number, String, Boolean, Undefined, Null）是不可变的</li>
+<li>Objects, arrays,  functions 是可变的</li>
+</ul>
+<p>有人说过，数据结构上的可变性很容易出现错误。由于我们的存储将由状态对象和数组组成，因此我们需要实施一个策略来保持状态不变。</p>
+<p>让我们想象一个我们需要改变属性的状态对象。这里有三种方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Example One</span></span><br><span class="line">state.foo = <span class="string">'123'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Example Two</span></span><br><span class="line"><span class="built_in">Object</span>.assign(state, &#123; <span class="attr">foo</span>: <span class="number">123</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Example Three</span></span><br><span class="line"><span class="keyword">var</span> newState = <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123; <span class="attr">foo</span>: <span class="number">123</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>第一个和第二个例子改变了状态对象。第二个例子改变是因为<code>Object.assign()</code>方法合并所有的参数到第一个参数中。但这也是为什么第三个例子不会改变状态的原因。</p>
+<p>第三个例子合并<code>state</code>和<code>{foo: 123}</code>到一个新的空对象。这是一个常见的技巧，它使我们能够在不影响原始状态的情况下创建状态副本并对副本进行变更。</p>
+<p>对象“传播运算符”是保持状态不变的另一种方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newState = &#123; ...state, <span class="attr">foo</span>: <span class="number">123</span> &#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="初始化状态和时间旅行"><a href="#初始化状态和时间旅行" class="headerlink" title="初始化状态和时间旅行"></a>初始化状态和时间旅行</h2><p>如果你阅读了<a href="http://redux.js.org/docs/api/createStore.html" target="_blank" rel="noopener">文档</a>,你可能意识到<code>createStore()</code>的第二个参数，是为了<code>initial state</code>。这看起来像是reducer创建初始状态的替代方案。但是，这个初始状态只能用于“state hydration”。</p>
+<p>想象一下，用户会对SPA进行刷新，并且存储的状态将重置为reducer初始状态。这可能不是用户所期望的。</p>
+<p>相反，想象一下，您可以使用策略来固化存储，然后您可以在刷新时将其重新水合到Redux中。这是将初始状态发送到<code>createStore（）</code>的原因。</p>
+<h2 id="Redux-with-React"><a href="#Redux-with-React" class="headerlink" title="Redux with React"></a>Redux with React</h2><p>正如我们已经讨论过的，Redux是框架无关的。先了解Redux的核心概念，然后再考虑它如何与React协同工作。但是现在我们准备从上一篇文章中获取一个容器组件，并将Redux应用到它。</p>
+<p>首先，这里是没有Redux的原始组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</span><br><span class="line"><span class="keyword">import</span> UserList <span class="keyword">from</span> <span class="string">'../views/list-user'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> UserListContainer = React.createClass(&#123;</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      users: []</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    axios.get(<span class="string">'/path/to/user-api'</span>).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;<span class="attr">users</span>: response.data&#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">UserList</span> <span class="attr">users</span>=<span class="string">&#123;this.state.users&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;);</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export default UserListContainer;</span></span><br></pre></td></tr></table></figure>
+<p>当然，它会执行它的Ajax请求并更新它自己的本地状态。但如果应用程序中的其他区域需要根据新获得的用户列表进行更改，则此策略是不够的。</p>
+<p>使用Redux策略，我们可以在Ajax请求返回时调度一个动作，而不是执行<code>this.setState（）</code>。然后这个组件和其他人可以订阅状态更改。但是这实际上给我们带来了一个问题，我们如何设置<code>store.subscribe（）</code>来更新组件的状态？</p>
+<p>我想我可以提供几个手动将组件连接到Redux存储的示例。你甚至可以想象如何用你自己的方法来处理。但最终，在这些例子的最后，我会解释说有更好的方法，忘记手动例子。然后我将介绍名为r<a href="http://redux.js.org/docs/basics/UsageWithReact.html" target="_blank" rel="noopener">eact-redux</a>的官方React / Redux绑定模块。所以让我们直接跳到这一点。</p>
+<h2 id="Connecting-with-react-redux"><a href="#Connecting-with-react-redux" class="headerlink" title="Connecting with react-redux"></a>Connecting with react-redux</h2><p>为了清楚起见，<code>react</code>，<code>redux</code>和<code>react-redux</code>是npm上的三个独立模块。<code>react-redux</code>模块使我们能够以更方便的方式将<code>React</code>组件连接到<code>Redux</code>。</p>
+<p>如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'../path/to/store'</span>;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</span><br><span class="line"><span class="keyword">import</span> UserList <span class="keyword">from</span> <span class="string">'../views/list-user'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> UserListContainer = React.createClass(&#123;</span><br><span class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    axios.get(<span class="string">'/path/to/user-api'</span>).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">      store.dispatch(&#123;</span><br><span class="line">        type: <span class="string">'USER_LIST_SUCCESS'</span>,</span><br><span class="line">        users: response.data</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">UserList</span> <span class="attr">users</span>=<span class="string">&#123;this.props.users&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;);</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">const mapStateToProps = function(store) &#123;</span></span><br><span class="line"><span class="xml">  return &#123;</span></span><br><span class="line"><span class="xml">    users: store.userState.users</span></span><br><span class="line"><span class="xml">  &#125;;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export default connect(mapStateToProps)(UserListContainer);</span></span><br></pre></td></tr></table></figure>
+<p>上面代码做了以下事情：</p>
+<ol>
+<li>从<code>react-redux</code>导入<code>connect</code>方法</li>
+<li>从下向上看代码。<code>connect</code>方法其实有两个参数，但是我们值提供了一个<code>mapStateToProps()</code>。</li>
+<li><code>connect()</code>方法的第一个参数是一个函数返回一个对象。对象的属性会变为组件的<code>props</code>。可以在状态中看到他们。现在，我希望函数名“mapStateToProps”更有意义。另请注意，<code>mapStateToProps（）</code>将收到一个参数，它是整个Redux存储的参数。<code>mapStateToProps（）</code>的主要思想是将组件需要的整体状态的哪些部分作为其<code>props</code>。</li>
+<li>由于第三条的原因我们不在需要<code>getInitialState()</code>。我们使用<code>this.props.users</code>替代<code>this.state.users</code>，因为<code>users</code>现在是一个道具而不是本地组件状态。</li>
+<li>Ajax返回现在调度一个操作，而不是更新本地组件状态。</li>
+</ol>
+<p>示例代码假设用户reducer的工作原理可能并不明显。注意存储如何拥有userState属性。但是这个名字来自哪里？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapStateToProps = <span class="function"><span class="keyword">function</span>(<span class="params">store</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    users: store.userState.users</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个名字来自我们结合我们的reducer的时候:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reducers = combineReducers(&#123;</span><br><span class="line">  userState: userReducer,</span><br><span class="line">  widgetState: widgetReducer</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>虽然我们没有为示例显示实际的reducer（因为它将在另一个文件中），但它是确定其各自状态的子属性的reducer。为了确保<code>.users</code>是<code>userState</code>的属性，这些示例的缩减器可能如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> initialUserState = &#123;</span><br><span class="line">  users: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userReducer = <span class="function"><span class="keyword">function</span>(<span class="params">state = initialUserState, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'USER_LIST_SUCCESS'</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123; <span class="attr">users</span>: action.users &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Ajax-Lifecycle-Dispatches"><a href="#Ajax-Lifecycle-Dispatches" class="headerlink" title="Ajax Lifecycle Dispatches"></a>Ajax Lifecycle Dispatches</h2><p>在我们的Ajax示例中，我们只调度了一个动作。它故意被称为“USER_LIST_SUCCESS”，因为我们可能还希望在Ajax启动前发送’USER_LIST_REQUEST’，在Ajax发生故障时发送’USER_LIST_FAILED’。请务必阅读有关<a href="http://redux.js.org/docs/advanced/AsyncActions.html" target="_blank" rel="noopener">异步操作</a>的文档。</p>
+<h2 id="Dispatching-from-Events"><a href="#Dispatching-from-Events" class="headerlink" title="Dispatching from Events"></a>Dispatching from Events</h2><p>在之前的文章中，我们看到事件应该从容器组件传递到展示组件。事实证明，在事件只需发送一个动作的情况下，react-redux同样有效：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapDispatchToProps = <span class="function"><span class="keyword">function</span>(<span class="params">dispatch, ownProps</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    toggleActive: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      dispatch(&#123; ... &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(UserListContainer);</span><br></pre></td></tr></table></figure>
+<p>在展示组件中，我们可以像以前那样做<code>onClick = {this.props.toggleActive}</code>，但是这次我们不必自己编写事件。</p>
+<h2 id="Container-Component-Omission"><a href="#Container-Component-Omission" class="headerlink" title="Container Component Omission"></a>Container Component Omission</h2><p>有时，容器组件只需要订阅存储，并且不需要像<code>componentDidMount（）</code>这样的方法来启动Ajax请求。它可能只需要一个<code>render（）</code>方法将状态传递给展示组件。在这种情况下，我们可以通过以下方式创建一个容器组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> UserList <span class="keyword">from</span> <span class="string">'../views/list-user'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mapStateToProps = <span class="function"><span class="keyword">function</span>(<span class="params">store</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    users: store.userState.users</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps)(UserList);</span><br></pre></td></tr></table></figure>
+<p>是的，这是我们新的容器组件的整个文件。但是请等待，容器组件在哪里？我们为什么不在这里使用<code>React.createClass（）</code>？</p>
+<p>事实证明，<code>connect（）</code>为我们创建了一个容器组件。注意这次我们直接传递了展示组件，而不是传入自己创建的容器组件。如果您真的想到容器组件所做的事情，请记住它们存在以允许演示组件只关注视图而不关注状态。他们也以属性形式将状态传递给子视图。这正是<code>connect（）</code>所做的 - 它将状态（通过props）传递给我们的展示组件，并实际返回一个包装容器组件的React组件。实质上，该包装器是一个容器组件。</p>
+<p>那么这是否意味着之前的例子实际上是两个包装展示性的容器组件？当然，你可以这样想。但这不是问题，只有当我们的容器组件需要除<code>render（）</code>之外的更多React方法时才有必要。</p>
+<p>将这两个容器组件看作服务于不同但相关的角色:<br><img src="https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-06.svg" alt="presentational"></p>
+<p>嗯，也许这就是为什么React标志看起来像一个原子！</p>
+<h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2><p>为了使这个<code>react-redux</code>代码正常工作，您需要让应用程序知道如何将<code>react-redux</code>与<code>&lt;Provider /&gt;</code>组件一起使用。这个组件包装你的整个React应用程序。如果您使用的是React Router，它将如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;&#123;router&#125;&lt;<span class="regexp">/Provider&gt;,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<p>被附加在<code>Provider</code>上的存储是通过<code>react-redux</code>真正“连接”React和Redux。</p>
+<h2 id="Redux-with-React-Router"><a href="#Redux-with-React-Router" class="headerlink" title="Redux with React Router"></a>Redux with React Router</h2><p>这不是必需的，但还有另一个名为<code>react-router-redux</code>的<code>npm</code>项目。由于路由在技术上属于UI状态的一部分，并且React Router不知道Redux，因此该项目有助于将两者联系起来。</p>
+<p>你看到我在那里做了什么？我们走了一圈，然后回到第一篇文章！# </p>
+<h2 id="Final-Project"><a href="#Final-Project" class="headerlink" title="Final Project"></a>Final Project</h2><p>本系列的<a href="https://github.com/bradwestfall/CSS-Tricks-React-Series/tree/master/guide-3-redux" target="_blank" rel="noopener">最终项目指南</a>允许您创建一个小的“用户和小部件”单页应用程序：<br><img src="https://raw.githubusercontent.com/bradwestfall/CSS-Tricks-React-Series/master/guide-3-redux/docs/preview.gif" alt="final"></p>
+<p>与本系列中的其他文章一样，每个文章都附带了一份指南，该指南更详细地介绍了指南在GitHub中的工作方式。</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>我真的很希望你喜欢这个系列，就像我写的一样。我意识到有很多关于React的话题我们没有涉及（表格为一），但我试图保持真实的前提，即我想让新用户了解如何通过基本知识以及制作单页应用程序的感受。</p>
+<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><p>**第一部分：<a href="https://css-tricks.com/learning-react-router/" target="_blank" rel="noopener">React Router</a></p>
+<p>**第二部分：<a href="https://css-tricks.com/learning-react-container-components/" target="_blank" rel="noopener">Container Components</a></p>
+<p>**第三部分：Redux</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+            <a href="/tags/redux/" rel="tag"># redux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/23/taiga-start/" rel="next" title="Taiga环境搭建">
+                <i class="fa fa-chevron-left"></i> Taiga环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/31/learning-plain/" rel="prev" title="学习计划">
+                学习计划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">SakyaWang</p>
+              <p class="site-description motion-element" itemprop="description">治大国如烹小鲜，编程亦然</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-是类Flux"><span class="nav-number">1.</span> <span class="nav-text">Redux 是类Flux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-真相的唯一来源"><span class="nav-number">1.1.</span> <span class="nav-text">1. 真相的唯一来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-状态是只读的"><span class="nav-number">1.2.</span> <span class="nav-text">2. 状态是只读的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用纯函数进行更改状态"><span class="nav-number">1.3.</span> <span class="nav-text">3. 使用纯函数进行更改状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我们第一个Redux存储"><span class="nav-number">2.</span> <span class="nav-text">我们第一个Redux存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要变动状态，拷贝它"><span class="nav-number">3.</span> <span class="nav-text">不要变动状态，拷贝它</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多Reducer"><span class="nav-number">4.</span> <span class="nav-text">多Reducer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分发行动之后调用哪个reducer"><span class="nav-number">5.</span> <span class="nav-text">分发行动之后调用哪个reducer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动作策略"><span class="nav-number">6.</span> <span class="nav-text">动作策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可变数据结构"><span class="nav-number">7.</span> <span class="nav-text">不可变数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化状态和时间旅行"><span class="nav-number">8.</span> <span class="nav-text">初始化状态和时间旅行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-with-React"><span class="nav-number">9.</span> <span class="nav-text">Redux with React</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-with-react-redux"><span class="nav-number">10.</span> <span class="nav-text">Connecting with react-redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax-Lifecycle-Dispatches"><span class="nav-number">11.</span> <span class="nav-text">Ajax Lifecycle Dispatches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dispatching-from-Events"><span class="nav-number">12.</span> <span class="nav-text">Dispatching from Events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Container-Component-Omission"><span class="nav-number">13.</span> <span class="nav-text">Container Component Omission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Provider"><span class="nav-number">14.</span> <span class="nav-text">Provider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux-with-React-Router"><span class="nav-number">15.</span> <span class="nav-text">Redux with React Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Project"><span class="nav-number">16.</span> <span class="nav-text">Final Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">17.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">18.</span> <span class="nav-text">系列文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SakyaWang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

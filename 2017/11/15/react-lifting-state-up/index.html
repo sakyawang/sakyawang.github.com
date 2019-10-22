@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react,state,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="提升状态">
+<meta name="keywords" content="react,state">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React提升状态">
+<meta property="og:url" content="http://sakyawang.me/2017/11/15/react-lifting-state-up/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="提升状态">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://reactjs.org/ef94afc3447d75cdc245c77efb0d63be.gif">
+<meta property="og:updated_time" content="2019-10-22T01:56:36.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React提升状态">
+<meta name="twitter:description" content="提升状态">
+<meta name="twitter:image" content="https://reactjs.org/ef94afc3447d75cdc245c77efb0d63be.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sakyawang.me/2017/11/15/react-lifting-state-up/">
+
+
+
+
+
+  <title>React提升状态 | 编程私厨</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">编程私厨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sakyawang.me/2017/11/15/react-lifting-state-up/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SakyaWang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="编程私厨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React提升状态</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T00:00:00+00:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  提升状态
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通常，几个组件需要反映相同的变化数据。我们建议将共享状态提升到最接近的共同祖先。让我们看看这是如何工作的。</p>
+<p>在本节中，我们将创建一个温度计算器，计算在给定温度下水是否会沸腾。</p>
+<p>我们从<code>BoilingVerdict</code>组件开始。它接受一个<code>celsius</code>温度属性，打印这个温度是否可以把把水烧开：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BoilingVerdict</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (props.celsius &gt;= <span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The water would boil.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The water would not boil.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们创建一个<code>Calculator</code>组件。它渲染一个<code>&lt;inpu/&gt;</code>输入框让用户输入温度，并把它存储在<code>this.state.temperature</code>。</p>
+<p>另外，会渲染输入参数的<code>BoilingVerdict</code>判定结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">temperature</span>: <span class="string">''</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">temperature</span>: e.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.state.temperature;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;Enter temperature <span class="keyword">in</span> Celsius:<span class="xml"><span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span></span><br><span class="line">        &lt;input</span><br><span class="line">          value=&#123;temperature&#125;</span><br><span class="line">          onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;BoilingVerdict</span><br><span class="line">          celsius=&#123;<span class="built_in">parseFloat</span>(temperature)&#125; /&gt;</span><br><span class="line"></span><br><span class="line">      &lt;<span class="regexp">/fieldset&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codepen.io/gaearon/pen/ZXeOBm?editors=0010" target="_blank" rel="noopener">demo</a></p>
+<h2 id="添加第二个输入"><a href="#添加第二个输入" class="headerlink" title="添加第二个输入"></a>添加第二个输入</h2><p>我们有一个新需求，除了摄氏温度输入外，我们需要一个华氏温度输入，他们俩保持同步。</p>
+<p>我们可以从<code>Calculator</code>组件中抽取出一个<code>TemperatureInput</code>组件。我们添加一个新的<code>scale</code>属性，值可以是<code>c</code>或者<code>f</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> scaleNames = &#123;</span><br><span class="line">  c: <span class="string">'Celsius'</span>,</span><br><span class="line">  f: <span class="string">'Fahrenheit'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TemperatureInput</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">temperature</span>: <span class="string">''</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">temperature</span>: e.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.state.temperature;</span><br><span class="line">    <span class="keyword">const</span> scale = <span class="keyword">this</span>.props.scale;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;Enter temperature <span class="keyword">in</span> &#123;scaleNames[scale]&#125;:<span class="xml"><span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span></span><br><span class="line">        &lt;input value=&#123;temperature&#125;</span><br><span class="line">               onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/fieldset&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们把<code>Calculator</code>渲染为两个独立的温度输入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;TemperatureInput scale=<span class="string">"c"</span> /&gt;</span><br><span class="line">        &lt;TemperatureInput scale=<span class="string">"f"</span> /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codepen.io/gaearon/pen/jGBryx?editors=0010" target="_blank" rel="noopener">demo</a></p>
+<p>我们现在有两个输入框，但是当在一个输入框输入温度的时候另一个输入框没有联动。这不符合我们的需求:两个输入框信息同步。</p>
+<p>我们也不能在<code>Calculator</code>中显示<code>BoilingVerdict</code>。因为温度存储在<code>Calculator</code>中，<code>Calculator</code>不知道当前的温度。</p>
+<h2 id="编写转换函数"><a href="#编写转换函数" class="headerlink" title="编写转换函数"></a>编写转换函数</h2><p>首先，我们编写两个函数用来转换摄氏温度和华氏温度：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toCelsius</span>(<span class="params">fahrenheit</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (fahrenheit - <span class="number">32</span>) * <span class="number">5</span> / <span class="number">9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toFahrenheit</span>(<span class="params">celsius</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (celsius * <span class="number">9</span> / <span class="number">5</span>) + <span class="number">32</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个函数是用来转换数字类型的。我们再编写一个方法接收一个字符串温度参数和一个转换函数，返回一个字符串。我们会用这个函数根据一个输入框的温度计算另一个输入框要显示的信息。</p>
+<p>对于无效的参数返回空字符串，保持四舍五入到小数点后三位：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tryConvert</span>(<span class="params">temperature, convert</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> input = <span class="built_in">parseFloat</span>(temperature);</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Number</span>.isNaN(input)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> output = convert(input);</span><br><span class="line">  <span class="keyword">const</span> rounded = <span class="built_in">Math</span>.round(output * <span class="number">1000</span>) / <span class="number">1000</span>;</span><br><span class="line">  <span class="keyword">return</span> rounded.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不如，执行<code>tryConvert(&#39;abc&#39;, toCelsius)</code>返回空字符串，执行<code>tryConvert(&#39;10.22&#39;, toFahrenheit)</code>返回<code>50.396</code>。</p>
+<h2 id="提升状态"><a href="#提升状态" class="headerlink" title="提升状态"></a>提升状态</h2><p>截止到目前，两个温度输入框组件在自己的state中维护温度值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TemperatureInput</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">temperature</span>: <span class="string">''</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">temperature</span>: e.target.value&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.state.temperature;</span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>然而，我们希望这两个输入框的数据是互相级联的。当我们修改摄氏温度值，华氏温度随之变化，反之亦然。</p>
+<p>在React中，共享状态是通过将需要共享的状态数据移动到相关组件的最近的共同祖先中来完成的。这就是所谓的“提升状态”。我们会把<code>TemperatureInput</code>组件的状态数据移动到<code>Calculator</code>组件中。</p>
+<p>如果<code>Calculator</code>组件拥有共享状态，则它将成为两个<code>TemperatureInput</code>组件中温度的“真实数据源”。它会让两个输入框的数据相互级联同步更新。<br>由于两个<code>TemperatureInput</code>组件的属性来自相同的父组件<code>Calculator</code>，所以两个输入将始终保持同步.</p>
+<p>让我们分步看一下他的工作流程。</p>
+<p>首先，我们把<code>TemperatureInput</code>组件中的<code>this.state.temperature</code>替换为<code>this.props.temperature</code>。现在，让我们假装<code>this.props.temperature</code>已经存在，虽然我们将来需要从计算器中传递它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    <span class="comment">// Before: const temperature = this.state.temperature;</span></span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.props.temperature;</span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>我们知道属性是不可修改的。当<code>temperature</code>属性是<code>TemperatureInput</code>组件的state中的值时，可以通过<code>this.setState()</code>来修改它。然而，现在<code>temperature</code>属性父元素通过props传递的，<code>TemperatureInput</code>组件不能操作他。</p>
+<p>在React中通常使用一个受控组件来解决。就像<code>&lt;input/&gt;</code>DOM元素接收<code>value</code>和<code>onChange</code>属性，<code>TemperatureInput</code>组件可以从父组件<code>Calculator</code>中获取<code>temperature</code>和<code>onTemperatureChange</code>属性。</p>
+<p>现在，当<code>TemperatureInput</code>组件要更新温度的时候，只需要调用<code>this.props.onTemperatureChange</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">handleChange(e) &#123;</span><br><span class="line">    <span class="comment">// Before: this.setState(&#123;temperature: e.target.value&#125;);</span></span><br><span class="line">    <span class="keyword">this</span>.props.onTemperatureChange(e.target.value);</span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：<br>在自定义组件中不论是<code>temperature</code>属性还是<code>onTemperatureChange</code>属性都没有特殊涵义。我们可以随意命名，比如把常见约定是把它们命名为value和onChange。</p>
+</blockquote>
+<p><code>temperature</code>和<code>onTemperatureChange</code>由父组件一起提供。它将通过修改自己的本地状态来处理数据变更，从而使用新值重新渲染两个输入框。在深入修改<code>Calculator</code>组件之前，让我们总结一下对<code>TemperatureInput</code>组件的变更。我们把<code>temperature</code>从他自身状态移除，通过props获取。调用<code>Calculator</code>提供的<code>this.props.onTemperatureChange()</code>替代<code>this.setState()</code>来改变状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TemperatureInput</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.onTemperatureChange(e.target.value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.props.temperature;</span><br><span class="line">    <span class="keyword">const</span> scale = <span class="keyword">this</span>.props.scale;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;fieldset&gt;</span><br><span class="line">        &lt;legend&gt;Enter temperature <span class="keyword">in</span> &#123;scaleNames[scale]&#125;:<span class="xml"><span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span></span><br><span class="line">        &lt;input value=&#123;temperature&#125;</span><br><span class="line">               onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/fieldset&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>现在让我们来处理下<code>Calculator</code>组件。</p>
+<p>我们把输入的<code>temperature</code>和<code>scale</code>存储在组件的state中。这是从子组件提升上来的状态，讲作为两个输入框的真实数据源。这是为了渲染两个输入框需要准备的最小化数据。</p>
+<p>比如，我们输入37到摄氏温度输入框中，<code>Calculator</code>组件的状态是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  temperature: <span class="string">'37'</span>,</span><br><span class="line">  scale: <span class="string">'c'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们把华氏温度修改为212，<code>Calculator</code>组件的状态变为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  temperature: <span class="string">'212'</span>,</span><br><span class="line">  scale: <span class="string">'f'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以存储这两个输入的值，但事实证明是不必要的。我们只需要存储最近的温度值和他的单位就可以了。我们可以根据温度值和单位计算出另一个单位的温度值。</p>
+<p>由于输入框的值是根据同一个状态值计算出来的所以两个输入框会保持同步：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleCelsiusChange = <span class="keyword">this</span>.handleCelsiusChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleFahrenheitChange = <span class="keyword">this</span>.handleFahrenheitChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">temperature</span>: <span class="string">''</span>, <span class="attr">scale</span>: <span class="string">'c'</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleCelsiusChange(temperature) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">scale</span>: <span class="string">'c'</span>, temperature&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleFahrenheitChange(temperature) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">scale</span>: <span class="string">'f'</span>, temperature&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> scale = <span class="keyword">this</span>.state.scale;</span><br><span class="line">    <span class="keyword">const</span> temperature = <span class="keyword">this</span>.state.temperature;</span><br><span class="line">    <span class="keyword">const</span> celsius = scale === <span class="string">'f'</span> ? tryConvert(temperature, toCelsius) : temperature;</span><br><span class="line">    <span class="keyword">const</span> fahrenheit = scale === <span class="string">'c'</span> ? tryConvert(temperature, toFahrenheit) : temperature;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;TemperatureInput</span><br><span class="line">          scale=<span class="string">"c"</span></span><br><span class="line">          temperature=&#123;celsius&#125;</span><br><span class="line">          onTemperatureChange=&#123;<span class="keyword">this</span>.handleCelsiusChange&#125; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TemperatureInput</span><br><span class="line">          scale=<span class="string">"f"</span></span><br><span class="line">          temperature=&#123;fahrenheit&#125;</span><br><span class="line">          onTemperatureChange=&#123;<span class="keyword">this</span>.handleFahrenheitChange&#125; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;BoilingVerdict</span><br><span class="line">          celsius=&#123;<span class="built_in">parseFloat</span>(celsius)&#125; /&gt;</span><br><span class="line"></span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codepen.io/gaearon/pen/WZpxpz?editors=0010" target="_blank" rel="noopener">demo</a></p>
+<p>现在不论哪一个输入框变更，<code>Calculator</code>组件的<code>this.state.temperature</code>和<code>this.state.scale</code>都会更新。其中一个输入框按原样得到值，所以任何用户输入都被保留，而另一个输入值总是基于它重新计算。</p>
+<p>我们总结一下当修改输入框内容的时候发生了什么：</p>
+<ul>
+<li>React调用DOM元素<code>&lt;input /&gt;</code>的<code>onChange</code>事件绑定的函数。在这里是调用<code>TemperatureInput</code>组件的<code>handleChange</code>方法。</li>
+<li><code>handleChange</code>方法调用<code>TemperatureInput</code>组件的<code>this.props.onTemperatureChange()</code>方法处理期望值。他的属性包括<code>onTemperatureChange</code>都有父组件<code>Calculator</code>提供。</li>
+<li>如果<code>Calculator</code>组件之前的渲染指定了<code>onTemperatureChange</code>使用摄氏温度输入框的处理函数<code>handleCelsiusChange</code>。根据我们修改的输入框类型来调用不同的函数来同步数据。</li>
+<li>在这些方法里，<code>Calculator</code>组件调用<code>this.setState()</code>来根据我们的输入重绘。</li>
+<li>React调用<code>Calculator</code>组件的<code>render</code>方法告诉UI要显示成什么样。两个输入框的信息根据最后的输入和温度类型计算得来。温度转换在这一步执行。</li>
+<li>React调用每个由父组件<code>Calculator</code>更新过属性的<code>TemperatureInput</code>组件的<code>render</code>方法。告诉他们渲染成什么样子。</li>
+<li>React把DOM渲染为期望的样子。我们编辑的输入框显示输入的值，另一个输入框显示转换之后的值。</li>
+</ul>
+<p>每个更新都经过相同的步骤，使输入保持同步。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于在React应用程序中的动态数据，应该只有一个“数据源”。通常，状态是最先加入到组件中并且重绘是需要用到的数据。然后，如果其他组件也需要它，这时需要把这个状态提升到这些组件公共的祖先中。你应该遵循<a href="https://reactjs.org/docs/state-and-lifecycle.html#the-data-flows-down" target="_blank" rel="noopener">单向数据流</a>原则来保持组件的状态同步，而不是在不同组件之间互相同步状态。</p>
+<p>提升状态涉及到比双向数据绑定更多的模板代码，但是好处是，花费更少的工作找到和隔离错误。由于任何状态“存在”某个组件中，而且这个组件本身就可以改变它，所以错误的范围大大减小。此外，你可以实现任何自定义逻辑来拒绝或转换用户输入。</p>
+<p>如果一些信息可以从属性或状态中推导出来，它可能不应该在状态中。比如，我们可以通过最后编辑的<code>temperature</code>值和他的<code>scale</code>值来推导出<code>celsiusValue</code>和<code>fahrenheitValue</code>。一个输入框总是可以根据另一个输入框的值在<code>render()</code>方法中计算出来。这可以让我们清除或应用四舍五入到其他字段，而不会丢失用户输入的任何精度。</p>
+<p>当UI出现错误时，可以使用<a href="https://github.com/facebook/react-devtools" target="_blank" rel="noopener">React Developer Tools</a>进行排错，可以跟踪数据的流转：</p>
+<p><img src="https://reactjs.org/ef94afc3447d75cdc245c77efb0d63be.gif" alt="demo"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+            <a href="/tags/state/" rel="tag"># state</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/15/react-conditional-render/" rel="next" title="React条件渲染">
+                <i class="fa fa-chevron-left"></i> React条件渲染
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/16/protobuf-python/" rel="prev" title="win搭建protobuf python开发环境">
+                win搭建protobuf python开发环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">SakyaWang</p>
+              <p class="site-description motion-element" itemprop="description">治大国如烹小鲜，编程亦然</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加第二个输入"><span class="nav-number">1.</span> <span class="nav-text">添加第二个输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写转换函数"><span class="nav-number">2.</span> <span class="nav-text">编写转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提升状态"><span class="nav-number">3.</span> <span class="nav-text">提升状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SakyaWang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
