@@ -5,6 +5,9 @@
   "hexo": {
     "version": "3.9.0"
   },
+  "scripts": {
+    "build": "hexo generate"
+  },
   "dependencies": {
     "hexo": "^3.7.1",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
