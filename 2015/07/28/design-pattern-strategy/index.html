@@ -1,37 +1,583 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block content %}
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sakyawang.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"about":{"text":"关于","order":-1}}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="设计模式解读之一： 策略模式&#x2F;“组合”优于“继承” 例子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式解读之一： 策略模式">
+<meta property="og:url" content="http://sakyawang.me/2015/07/28/design-pattern-strategy/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="设计模式解读之一： 策略模式&#x2F;“组合”优于“继承” 例子">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-07-28T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T03:45:52.661Z">
+<meta property="article:author" content="SakyaWang">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="组合">
+<meta property="article:tag" content="继承">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://sakyawang.me/2015/07/28/design-pattern-strategy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://sakyawang.me/2015/07/28/design-pattern-strategy/","path":"2015/07/28/design-pattern-strategy/","title":"设计模式解读之一： 策略模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>设计模式解读之一： 策略模式 | 编程私厨</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">编程私厨</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">设计模式解读之一： 策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">3.  解决方案</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">SakyaWang</p>
+  <div class="site-description" itemprop="description">治大国如烹小鲜，编程亦然</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sakyawang.me/2015/07/28/design-pattern-strategy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SakyaWang">
+      <meta itemprop="description" content="治大国如烹小鲜，编程亦然">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="编程私厨">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          设计模式解读之一： 策略模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-07-28 00:00:00" itemprop="dateCreated datePublished" datetime="2015-07-28T00:00:00+00:00">2015-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-04 03:45:52" itemprop="dateModified" datetime="2022-01-04T03:45:52+00:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">设计模式解读之一： 策略模式/“组合”优于“继承” 例子</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>转自：<a target="_blank" rel="noopener" href="http://www.javaeye.com/topic/328262">http://www.javaeye.com/topic/328262</a></p>
+<p>当我们掌握了Java的语法，当我们了解了面向对象的封装、继承、多态等特性，当我们可以用Swing、Servlet、JSP技术构建桌面以及Web应用，不意味着我们可以写出面向对象的程序，不意味着我们可以很好的实现代码复用，弹性维护，不意味着我们可以实现在维护、扩展基础上的代码复用。</p>
+<p>一把刀，可以使你制敌于无形而于江湖扬名，也可以只是一把利刃而使你切菜平静。Java，就是这把刀，它的威力取决于你使用的方式。当我们陷入无尽无止重复代码的泥沼，当我们面临牵一发而动全身的维护恶梦, 你应该想起“设计模式”这个行动秘笈。</p>
+<p>面向对象的精义，看似平淡，其实要经过艰苦实践才能成功。而构造OO系统的隐含经验于是被前人搜集而成并冠以“设计模式”之名。我们应该在编码行动初始就携带以它。接下来，让我们步“四人组”先行者之后，用中国文字、用实际案例领略模式于我们代码焕然一新的改变。</p>
+<h2 id="设计模式解读之一：-策略模式"><a href="#设计模式解读之一：-策略模式" class="headerlink" title="设计模式解读之一： 策略模式"></a>设计模式解读之一： 策略模式</h2><p><strong>1. 模式定义</strong></p>
+<p>把会变化的内容取出并封装起来，以便以后可以轻易地改动或扩充部分，而不影响不需要变化的其他部分；</p>
+<p><strong>2. 问题缘起</strong></p>
+<p>当涉及至代码维护时，为了复用目的而使用继承，结局并不完美。对父类的修改，会影响到子类型。在超类中增加的方法，会导致子类型有该方法，甚至连那些不该具备该方法的子类型也无法免除。示例，一个鸭子类型：</p>
+<pre><code>public abstract class Duck &#123;
+    //所有的鸭子均会叫以及游泳，所以父类中处理这部分代码
+    public void quack() &#123;
+        System.out.println(&quot;Quack&quot;);
+    &#125;
+    
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    //因为每种鸭子的外观是不同的，所以父类中该方法是抽象的，由子类型自己完成。
+    public abstract void display();
+&#125;
+
+public class MallardDuck extends Duck &#123;
+    //野鸭外观显示为绿头
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+&#125;
+
+public class RedHeadDuck extends Duck &#123;
+    //红头鸭显示为红头
+    public void display() &#123;
+        System.out.println(&quot;Red head.&quot;);
+    &#125;
+&#125;
+
+public class RubberDuck extends Duck &#123;
+    //橡皮鸭叫声为吱吱叫，所以重写父类以改写行为
+    public void quack() &#123;
+        System.out.println(&quot;Squeak&quot;);
+    &#125;
+
+    //橡皮鸭显示为黄头
+    public void display() &#123;
+        System.out.println(&quot;Yellow head.&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码，初始实现得非常好。现在我们如果给Duck.java中加入fly()方法的话，那么在子类型中均有了该方法，于是我们看到了 会飞的橡皮鸭子，你看过吗？当然，我们可以在子类中通过空实现重写该方法以解决该方法对于子类型的影响。但是父类中再增加其它的方法呢？</p>
+<p>通过继承在父类中提供行为，会导致以下缺点：</p>
+<ul>
+<li>代码在多个子类中重复;</li>
+<li>运行时的行为不容易改变；</li>
+<li>改变会牵一发动全身，造成部分子类型不想要的改变；</li>
+</ul>
+<p>好啦，还是刚才鸭子的例子，你也许想到使用接口，将飞的行为、叫的行为定义为接口，然后让Duck的各种子类型实现这些接口。这时侯代码类似于：</p>
+<pre><code>public abstract class Duck &#123;
+    //将变化的行为 fly() 以及quake()从Duck类中分离出去定义形成接口，有需求的子类中自行去实现
+
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    public abstract void display();
+&#125;
+
+//变化的 fly() 行为定义形成的接口
+public interface FlyBehavior &#123;
+    void fly();
+&#125;
+
+//变化的 quack() 行为定义形成的接口
+public interface QuackBehavior &#123;
+    void quack();
+&#125;
+
+//野鸭子会飞以及叫，所以实现接口  FlyBehavior, QuackBehavior
+public class MallardDuck extends Duck implements FlyBehavior, QuackBehavior&#123;
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+
+    public void fly() &#123;
+        System.out.println(&quot;Fly.&quot;);                
+    &#125;
+
+    public void quack() &#123;
+        System.out.println(&quot;Quack.&quot;);                
+    &#125;
+&#125;
+
+//红头鸭子会飞以及叫，所以也实现接口  FlyBehavior, QuackBehavior
+public class RedHeadDuck extends Duck implements FlyBehavior, QuackBehavior&#123;
+    public void display() &#123;
+        System.out.println(&quot;Red head.&quot;);
+    &#125;    
+
+    public void fly() &#123;
+        System.out.println(&quot;Fly.&quot;);                
+    &#125;
+
+    public void quack() &#123;
+        System.out.println(&quot;Quack.&quot;);                
+    &#125;    
+&#125;
+
+//橡皮鸭不会飞，但会吱吱叫，所以只实现接口QuackBehavior
+public class RubberDuck extends Duck implements QuackBehavior&#123;
+    //橡皮鸭叫声为吱吱叫
+    public void quack() &#123;
+        System.out.println(&quot;Squeak&quot;);
+    &#125;
+
+    //橡皮鸭显示为黄头
+    public void display() &#123;
+        System.out.println(&quot;Yellow head.&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码虽然解决了一部分问题，让子类型可以有选择地提供一些行为(例如 fly() 方法将不会出现在橡皮鸭中).但我们也看到，野鸭子MallardDuck.java和红头鸭子RedHeadDuck.java的一些相同行为代码不能得到重复使用。很大程度上这是从一个火坑跳到另一个火坑。</p>
+<p>在一段程序之后，让我们从细节中跳出来，关注一些共性问题。不管使用什么语言，构建什么应用，在软件开发上，一直伴随着的不变的真理是：需要一直在变化。不管当初软件设计得多好，一段时间之后，总是需要成长与改变，否则软件就会死亡。</p>
+<p>我们知道，继承在某种程度上可以实现代码重用，但是父类(例如鸭子类Duck)的行为在子类型中是不断变化的，让所有子类型都有这些行为是不恰当的。我们可以将这些行为定义为接口，让Duck的各种子类型去实现，但接口不具有实现代码，所以实现接口无法达到代码复用。这意味着，当我们需要修改某个行为，必须往下追踪并在每一个定义此行为的类中修改它，一不小心，会造成新的错误。</p>
+<p>设计原则：</p>
+<pre><code>把应用中变化的地方独立出来，不要和那些不需要变化的代码混在一起。
+这样代码变化引起的不经意后果变少，系统变得更有弹性。
+</code></pre>
+<p>按照上述设计原则，我们重新审视之前的Duck代码。</p>
+<p><strong>1) 分开变化的内容和不变的内容</strong></p>
+<p>Duck类中的行为 fly(), quack(), 每个子类型可能有自己特有的表现，这就是所谓的变化的内容。</p>
+<p>Duck类中的行为 swim() 每个子类型的表现均相同，这就是所谓不变的内容。</p>
+<p>我们将变化的内容从Duck()类中剥离出来单独定义形成接口以及一系列的实现类型。将变化的内容定义形成接口可实现变化内容和不变内容的剥离。其实现类型可实现变化内容的重用。这些实现类并非Duck.java的子类型，而是专门的一组实现类，称之为”行为类”。由行为类而不是Duck.java的子类型来实现接口。这样，才能保证变化的行为独立于不变的内容。于是我们有：</p>
+<p>变化的内容：</p>
+<pre><code>   //变化的 fly() 行为定义形成的接口
+   public interface FlyBehavior &#123;
+    void fly();
+   &#125;
+     
+   //变化的 fly() 行为的实现类之一
+   public class FlyWithWings implements FlyBehavior &#123;
+    public void fly() &#123;
+        System.out.println(&quot;I&#39;m flying.&quot;);
+    &#125;
+   &#125;
+
+   //变化的 fly() 行为的实现类之二
+   public class FlyNoWay implements FlyBehavior &#123;
+    public void fly() &#123;
+        System.out.println(&quot;I can&#39;t fly.&quot;);
+    &#125;
+   &#125;
+
+       -----------------------------------------------------------------
+
+   //变化的 quack() 行为定义形成的接口
+   public interface QuackBehavior &#123;
+    void quack();
+   &#125;
+
+   //变化的 quack() 行为实现类之一
+   public class Quack implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;Quack&quot;);
+    &#125;
+   &#125;
+
+   //变化的 quack() 行为实现类之二
+   public class Squeak implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;Squeak.&quot;);
+    &#125;
+   &#125;
+
+   //变化的 quack() 行为实现类之三
+   public class MuteQuack implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;&lt;&lt; Slience &gt;&gt;&quot;);
+    &#125;
+   &#125;
+</code></pre>
+<p>通过以上设计，fly()行为以及quack()行为已经和Duck.java没有什么关系，可以充分得到复用。而且我们很容易增加新的行为, 既不影响现有的行为，也不影响Duck.java。但是，大家可能有个疑问，就是在面向对象中行为不是体现为方法吗？为什么现在被定义形成类(例如Squeak.java)？在OO中，类代表的”东西”一般是既有状态(实例变量）又有方法。只是在本例中碰巧”东西”是个行为。既使是行为，也有属性及方法，例如飞行行为，也需要一些属性记录飞行的状态，如飞行高度、速度等。</p>
+<p><strong>2) 整合变化的内容和不变的内容</strong></p>
+<p>Duck.java将 fly()以及quack()的行为委拖给行为类处理。</p>
+<p>不变的内容：</p>
+<pre><code>   public abstract class Duck &#123;
+        //将行为类声明为接口类型，降低对行为实现类型的依赖
+    FlyBehavior flyBehavior;
+    QuackBehavior quackBehavior;
+
+    public void performFly() &#123;
+        //不自行处理fly()行为，而是委拖给引用flyBehavior所指向的行为对象
+        flyBehavior.fly();
+    &#125;
+
+    public void performQuack() &#123;
+        quackBehavior.quack();
+    &#125;
+
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    public abstract void display();
+   &#125;
+
+   Duck.java不关心如何进行 fly()以及quack(), 这些细节交由具体的行为类完成。
+   
+   public class MallardDuck extends Duck&#123;
+    public MallardDuck() &#123;
+        flyBehavior=new FlyWithWings();
+        quackBehavior=new Quack();        
+    &#125;
+    
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+   &#125;
+</code></pre>
+<p>测试类：</p>
+<pre><code>   public class DuckTest &#123;
+    public static void main(String[] args) &#123;
+        Duck duck=new MallardDuck();
+        duck.performFly();
+        duck.performQuack();        
+    &#125;
+   &#125;
+</code></pre>
+<p>在Duck.java子类型MallardDuck.java的构造方法中，直接实例化行为类型，在编译的时侯便指定具体行为类型。当然，我们可以：</p>
+<ul>
+<li><p>我们可以通过工厂模式或其它模式进一步解藕(可参考后续模式讲解);</p>
+</li>
+<li><p>或做到在运行时动态地改变行为。</p>
+</li>
+</ul>
+<p><strong>3) 动态设定行为</strong></p>
+<p>在父类Duck.java中增加设定行为类型的setter方法，接受行为类型对象的参数传入。为了降藕，行为参数被声明为接口类型。这样，既便在运行时，也可以通过调用这二个方法以改变行为。</p>
+<pre><code>   public abstract class Duck &#123;
+    //在刚才Duck.java中加入以下二个方法。
+    public void setFlyBehavior(FlyBehavior flyBehavior) &#123;
+        this.flyBehavior=flyBehavior;
+    &#125;
+    
+    public void setQuackBehavior(QuackBehavior quackBehavior) &#123;
+        this.quackBehavior=quackBehavior;
+    &#125;
+
+    //其它方法同，省略...
+   &#125;
+</code></pre>
+<p>测试类：</p>
+<pre><code>   public class DuckTest &#123;
+    public static void main(String[] args) &#123;
+        Duck duck=new MallardDuck();
+        duck.performFly();
+        duck.performQuack();
+        duck.setFlyBehavior(new FlyNoWay());
+        duck.performFly();
+    &#125;
+   &#125;
+</code></pre>
+<p>如果，我们要加上火箭助力的飞行行为，只需再新建FlyBehavior.java接口的实现类型。而子类型可通过调用setQuackBehavior(…)方法动态改变。至此，在Duck.java增加新的行为给我们代码所带来的困绕已不复存在。</p>
+<p>该是总结的时侯了，让我们从代码的水中浮出来，做一只在水面上自由游动的鸭子吧:</p>
+<h2 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3.  解决方案"></a>3.  解决方案</h2><ul>
+<li>MallardDuck 继承  Duck抽象类；          -&gt; 不变的内容</li>
+<li>FlyWithWings 实现 FlyBehavior接口；     -&gt; 变化的内容,行为或算法</li>
+<li>在Duck.java提供setter方法以装配关系；    -&gt; 动态设定行为</li>
+</ul>
+<p>以上就是策略模式的实现三步曲。接下来，让我们透过步骤看本质:</p>
+<ul>
+<li><p>初始，我们通过继承实现行为的重用，导致了代码的维护问题。          -&gt; 继承, is a</p>
+</li>
+<li><p>接着，我们将行为剥离成单独的类型并声明为不变内容的实例变量并通过  -&gt; 组合, has a<br>setter方法以装配关系；</p>
+<pre><code>  继承，可以实现静态代码的复用；
+  组合，可以实现代码的弹性维护；
+  使用组合代替继承，可以使代码更好地适应软件开发完后的需求变化。
+  策略模式的本质：少用继承，多用组合
+</code></pre>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+              <a href="/tags/%E7%BB%84%E5%90%88/" rel="tag"># 组合</a>
+              <a href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag"># 继承</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/07/17/stack/" rel="prev" title="stack的三种含义">
+                  <i class="fa fa-chevron-left"></i> stack的三种含义
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/07/29/java-proxy/" rel="next" title="java代理">
+                  java代理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SakyaWang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

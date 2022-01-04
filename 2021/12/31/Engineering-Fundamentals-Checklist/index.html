@@ -1,37 +1,377 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block content %}
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sakyawang.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"about":{"text":"关于","order":-1}}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="软件工程检查清单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程检查清单">
+<meta property="og:url" content="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="软件工程检查清单">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-31T11:16:55.000Z">
+<meta property="article:modified_time" content="2022-01-04T03:45:52.657Z">
+<meta property="article:author" content="SakyaWang">
+<meta property="article:tag" content="engineering">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/","path":"2021/12/31/Engineering-Fundamentals-Checklist/","title":"软件工程检查清单"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件工程检查清单 | 编程私厨</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">编程私厨</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">源码管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E9%A1%B9%E8%B7%9F%E8%B8%AA"><span class="nav-number">2.</span> <span class="nav-text">工作项跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CI-CD"><span class="nav-number">4.</span> <span class="nav-text">CI&#x2F;CD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%82%E5%AF%9F%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">可观察性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%8F%E6%8D%B7-SCRUM"><span class="nav-number">7.</span> <span class="nav-text">敏捷&#x2F;SCRUM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">设计评审</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5"><span class="nav-number">9.</span> <span class="nav-text">代码审查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E4%BC%9A"><span class="nav-number">10.</span> <span class="nav-text">回顾会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E5%8F%8D%E9%A6%88"><span class="nav-number">11.</span> <span class="nav-text">工程反馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C"><span class="nav-number">12.</span> <span class="nav-text">开发经验</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">SakyaWang</p>
+  <div class="site-description" itemprop="description">治大国如烹小鲜，编程亦然</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SakyaWang">
+      <meta itemprop="description" content="治大国如烹小鲜，编程亦然">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="编程私厨">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件工程检查清单
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-31 11:16:55" itemprop="dateCreated datePublished" datetime="2021-12-31T11:16:55+00:00">2021-12-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-04 03:45:52" itemprop="dateModified" datetime="2022-01-04T03:45:52+00:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/develop/" itemprop="url" rel="index"><span itemprop="name">develop</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">软件工程检查清单</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h2><ul>
+<li>默认分支是否锁定</li>
+<li>是否通过PR合并分支</li>
+<li>PRs引用相关工作项</li>
+<li>提交历史是一致的并且提交信息丰富（包含做了什么，为什么）</li>
+<li>一致的分支命名约定</li>
+<li>清晰的存储库结构说明文档</li>
+<li>密码等安全信息不作为提交历史的一部分或者公开</li>
+<li>公共仓库遵循OSS 规范</li>
+</ul>
+<h2 id="工作项跟踪"><a href="#工作项跟踪" class="headerlink" title="工作项跟踪"></a>工作项跟踪</h2><ul>
+<li>所有个工作项在DevOps系统跟踪</li>
+<li>工作项内容是有组织的（泳道，特征标签，技术标签）</li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li>单元测试覆盖大部分组件（最好大于90%）</li>
+<li>集成测试按照 end-to-en测试方案进行</li>
+</ul>
+<h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><ul>
+<li>项目运行 CI，并在每个 PR 上自动构建和测试</li>
+<li>在合并 PR 之前，Project 使用 CD 来管理到副本环境的部署</li>
+<li>主分支总是可以发布的</li>
+</ul>
+<h2 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h2><ul>
+<li>仅根据需要授予访问权限</li>
+<li>密码存储在安全的位置，而不是签入代码</li>
+<li>数据在传输中被加密并且密码做hash</li>
+<li>系统是否拆分为具有关注点分离的逻辑段？这有助于限制安全漏洞</li>
+</ul>
+<h2 id="可观察性"><a href="#可观察性" class="headerlink" title="可观察性"></a>可观察性</h2><ul>
+<li>跟踪重要的业务和功能事件并收集相关指标</li>
+<li>记录应用程序故障和错误</li>
+<li>系统的健康状况受到监控</li>
+<li>可以区分客户端和服务器端的可观察性数据</li>
+<li>无需更改代码即可修改日志配置</li>
+<li>传入的跟踪上下文被传播以允许生产问题调试目的</li>
+<li>通用数据保护确保遵守个人身份信息保护条例</li>
+</ul>
+<h2 id="敏捷-SCRUM"><a href="#敏捷-SCRUM" class="headerlink" title="敏捷/SCRUM"></a>敏捷/SCRUM</h2><ul>
+<li>流程主管（固定/轮换）运行每日站会</li>
+<li>敏捷过程在团队中是明确定义的</li>
+<li>开发主管（+ PO/其他）负责Backlog管理和细化</li>
+<li>在团队成员和客户之间建立工作协议</li>
+</ul>
+<h2 id="设计评审"><a href="#设计评审" class="headerlink" title="设计评审"></a>设计评审</h2><ul>
+<li>进行设计审查的过程包含在工作协议中</li>
+<li>对解决方案的每个主要组件进行设计审查并记录在案，包括替代方案</li>
+<li>故事 或 需求 链接到设计文档</li>
+<li>默认情况下，每个用户故事都包含一个用于设计评审的任务，该任务在 sprint 计划期间被分配或删除</li>
+<li>邀请项目顾问进行设计评审或要求对文档中捕获的设计决策提供反馈</li>
+<li>发现客户流程所需的所有评论并为其制定计划</li>
+<li>捕捉到明确的非功能性需求</li>
+</ul>
+<h2 id="代码审查"><a href="#代码审查" class="headerlink" title="代码审查"></a>代码审查</h2><ul>
+<li>团队对代码审查的功能有明确的共识</li>
+<li>团队有代码审查清单或既定流程</li>
+<li>PR 合并的最少审阅者数量（通常为 2 个）作为规范强制执行</li>
+<li>为 PR 合并设置 Linters/代码分析器、单元测试和成功构建条件</li>
+<li>有一个流程可以强制执行快速审核周转</li>
+</ul>
+<h2 id="回顾会"><a href="#回顾会" class="headerlink" title="回顾会"></a>回顾会</h2><ul>
+<li>每周/每个冲刺结束时都会进行回顾</li>
+<li>该团队确定了 1-3 个提议的实验，每周/冲刺尝试以改进流程</li>
+<li>实验项有负责人并被添加到项目Backlog</li>
+<li>团队在里程碑和项目完成后进行了更长时间的回顾总结</li>
+</ul>
+<h2 id="工程反馈"><a href="#工程反馈" class="headerlink" title="工程反馈"></a>工程反馈</h2><ul>
+<li>团队提交有关阻止项目成功的业务和技术障碍的反馈</li>
+<li>解决方案中包含了改进建议</li>
+<li>反馈详细且可重复</li>
+</ul>
+<h2 id="开发经验"><a href="#开发经验" class="headerlink" title="开发经验"></a>开发经验</h2><ul>
+<li>构建/编译源码以验证它没有语法错误并编译通过</li>
+<li>执行所有的自动化测试（单元测试，end-to-end测试等）</li>
+<li>在部署环境启动端到端的模拟运行</li>
+<li>将调试器附加到已启动的解决方案或运行自动化测试、设置断点、单步执行代码和检查变量</li>
+<li>通过在其 IDE 中按 F5（或等效项）自动安装依赖项</li>
+<li>使用本地开发配置值（即 .env、appsettings.development.json）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/engineering/" rel="tag"># engineering</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/25/An-incomplete-list-of-skills-senior-engineers-need-beyond-coding/" rel="prev" title="An incomplete list of skills senior engineers need, beyond coding">
+                  <i class="fa fa-chevron-left"></i> An incomplete list of skills senior engineers need, beyond coding
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SakyaWang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

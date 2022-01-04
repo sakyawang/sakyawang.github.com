@@ -1,37 +1,398 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block content %}
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sakyawang.me","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"about":{"text":"关于","order":-1}}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="面向对象设计基本原则S.O.L.I.D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象设计基本原则">
+<meta property="og:url" content="http://sakyawang.me/2017/10/27/solid/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="面向对象设计基本原则S.O.L.I.D">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-27T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-04T03:45:52.665Z">
+<meta property="article:author" content="SakyaWang">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="oop">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://sakyawang.me/2017/10/27/solid/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://sakyawang.me/2017/10/27/solid/","path":"2017/10/27/solid/","title":"面向对象设计基本原则"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面向对象设计基本原则 | 编程私厨</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">编程私厨</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99SOLID"><span class="nav-number">1.</span> <span class="nav-text">面向对象设计原则SOLID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-S-%E2%80%93-Single-Responsibility-Principle-%E8%81%8C%E8%B4%A3%E5%8D%95%E4%B8%80%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">1. S – Single Responsibility Principle 职责单一原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-O-%E2%80%93-Open-Closed-Principle-%E5%BC%80%E6%94%BE%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">2. O – Open-Closed Principle 开放封闭原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-L-%E2%80%93-Liskov-Substitution-Principle-%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="nav-number">1.3.</span> <span class="nav-text">3. L – Liskov Substitution Principle 里氏替换原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-I-%E2%80%93-Interface-Segregation-Principle-%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">4. I – Interface Segregation Principle 接口隔离原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-D-%E2%80%93-Dependency-Inversion-Principle-%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99"><span class="nav-number">1.5.</span> <span class="nav-text">5. D – Dependency Inversion Principle 依赖倒置原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">SakyaWang</p>
+  <div class="site-description" itemprop="description">治大国如烹小鲜，编程亦然</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sakyawang.me/2017/10/27/solid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="SakyaWang">
+      <meta itemprop="description" content="治大国如烹小鲜，编程亦然">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="编程私厨">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象设计基本原则
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-10-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-10-27T00:00:00+00:00">2017-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-04 03:45:52" itemprop="dateModified" datetime="2022-01-04T03:45:52+00:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">面向对象设计基本原则S.O.L.I.D</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="面向对象设计原则SOLID"><a href="#面向对象设计原则SOLID" class="headerlink" title="面向对象设计原则SOLID"></a>面向对象设计原则SOLID</h2><p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design">https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hellojava/archive/2013/03/18/2966684.html">http://www.cnblogs.com/hellojava/archive/2013/03/18/2966684.html</a></p>
+<h3 id="1-S-–-Single-Responsibility-Principle-职责单一原则"><a href="#1-S-–-Single-Responsibility-Principle-职责单一原则" class="headerlink" title="1. S – Single Responsibility Principle 职责单一原则"></a>1. S – Single Responsibility Principle 职责单一原则</h3><blockquote>
+<p>对象应该仅具有一种单一功能。<br>概念上和unix的设计原则 “Do one thing and do it well”很相似。听起来很简单但是实践起来很难。</p>
+</blockquote>
+<p>比如，现在有一些图形要计算所有图形的面积。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Circle <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Square</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，创建图形类，包含构造函数和需要的属性参数。<br>接下来创建面积计算类AreaCalculator，然后编写方法计算提供的图形参数的面积总和。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AreaCalculator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List shapes;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AreaCalculator</span><span class="params">(List shapes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.shapes = shapes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">sum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// logic to sum the areas</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> System.out.println(String.format(<span class="string">&quot;Sum of the areas of provided shapes: %s&quot;</span>, <span class="keyword">this</span>.sum());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单实例化AreaCalculator对象，然后传入一个图形集合，然后调用output方法显示面积总和。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AreaCalculator areaCalculator = <span class="keyword">new</span> AreaCalculator(Arrays.asList(<span class="keyword">new</span> Circle(<span class="number">10.0f</span>), <span class="keyword">new</span> Square(<span class="number">12.0f</span>)));</span><br><span class="line">areaCalculator.output()</span><br></pre></td></tr></table></figure>
+<p>这里output方法的问题是AreaCalculator处理计算逻辑然后输出字符串结果。那么，如果用户想用json或者其他格式输出计算结果呢？<br>所有的操作都放到AreaCalculator中做违背了职责单一原则。AreaCalculator应该只计算提供的图形的面积总和，而不用关心如何输入结果。</p>
+<p>因此，需要新建一个SumCalculatorOutputter类用来处理统计结果输出操作。</p>
+<p>SumCalculatorOutputter类如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SumCalculatorOutputter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> AreaCalculator areaCalculator;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SumCalculatorOutputter</span><span class="params">(AreaCalculator areaCalculator)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.areaCalculator = areaCalculator;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outputJson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">double</span> sum = <span class="keyword">this</span>.areaCalculator.sum();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outputHtml</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">outputString</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AreaCalculator areaCalculator = <span class="keyword">new</span> AreaCalculator(Arrays.asList(<span class="keyword">new</span> Circle(<span class="number">10.0f</span>), <span class="keyword">new</span> Square(<span class="number">12.0f</span>)));</span><br><span class="line"></span><br><span class="line">SumCalculatorOutputter output = <span class="keyword">new</span> SumCalculatorOutputter(areaCalculator);</span><br><span class="line">output.outputJson();</span><br><span class="line">output.outputHtml();</span><br><span class="line">output.outputString();</span><br></pre></td></tr></table></figure>
+
+<p>现在不管你要把结果按照何种方式输出都放在SumCalculatorOutputter中处理。</p>
+<h3 id="2-O-–-Open-Closed-Principle-开放封闭原则"><a href="#2-O-–-Open-Closed-Principle-开放封闭原则" class="headerlink" title="2. O – Open-Closed Principle 开放封闭原则"></a>2. O – Open-Closed Principle 开放封闭原则</h3><blockquote>
+<p>对象应该是对于扩展开放的，但是对于修改封闭的。<br>这意味着一个类应该可以容易地扩展，而不需要修改类本身。</p>
+</blockquote>
+<p>我们来看下AreaCalculator类的sum方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">sum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">double</span> sum = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="keyword">for</span>(Object shape : <span class="keyword">this</span>.shapes) &#123;</span><br><span class="line">		<span class="keyword">if</span>(shape <span class="keyword">instanceof</span> Circle) &#123;</span><br><span class="line">			Circle shape = (Circle)shape;</span><br><span class="line">			sum += Math.pi * Math.sqrt(shape.getRadius());</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(shape <span class="keyword">instanceof</span> Square) &#123;</span><br><span class="line">			Square shape = (Square)shape;</span><br><span class="line">			sum += Math.sqrt(shape.getLength());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+<p>如果我们要支持更多的图形就需要添加更多的“else if”代码块儿，这就违背了开闭原则。<br>一种解决方式是把面积计算的逻辑迁移到图形类中，AreaCalculator类的sum方法调用图形类的面积计算方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Circle <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.PI * Math.sqrt(<span class="keyword">this</span>.radius);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Square</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们抽取公共方法area作为接口ShapeInterface的方法，这样新增图形的时候只要实现ShapeInterface接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Circle <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.PI * Math.sqrt(<span class="keyword">this</span>.radius);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Square</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在修改AreaCalculator类的sum方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AreaCalculator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;ShapeInterface&gt; shapes;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AreaCalculator</span><span class="params">(List&lt;ShapeInterface&gt; shapes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.shapes = shapes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">sum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.shapes.stream.map(ShapeInterface::sum).mapToDouble(Double::doubleValue).sum();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-L-–-Liskov-Substitution-Principle-里氏替换原则"><a href="#3-L-–-Liskov-Substitution-Principle-里氏替换原则" class="headerlink" title="3. L – Liskov Substitution Principle 里氏替换原则"></a>3. L – Liskov Substitution Principle 里氏替换原则</h3><blockquote>
+<p>对象应该是可以在不改变程序正确性的前提下被它的子类所替换的。</p>
+<p>子类可以扩展父类的功能，但不能改变父类原有的功能。</p>
+<p>子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。</p>
+<p>子类中可以增加自己特有的方法。</p>
+<p>当子类的方法重载父类的方法时，方法的前置条件（即方法的形参）要比父类方法的输入参数更宽松。</p>
+<p>当子类的方法实现父类的抽象方法时，方法的后置条件（即方法的返回值）要比父类更严格。</p>
+</blockquote>
+<p>违背里氏替换原则的例子，我们新增一个体积计算器类VolumeCalculator继承面积计算器类，覆盖sum方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VolumeCalculator</span> <span class="keyword">extends</span> <span class="title">AreaCalulator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeCalculator</span><span class="params">(List&lt;ShapeInterface&gt; shapes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(shapes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">sum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 新增其他逻辑操作变为体积统计</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.shapes.stream.map(ShapeInterface::sum).mapToDouble(Double::doubleValue).sum();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+<p>遵循里氏替换原则的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VolumeCalculator</span> <span class="keyword">extends</span> <span class="title">AreaCalulator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeCalculator</span><span class="params">(List&lt;ShapeInterface&gt; shapes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(shapes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 新增体积统计方法</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="number">0.0d</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-I-–-Interface-Segregation-Principle-接口隔离原则"><a href="#4-I-–-Interface-Segregation-Principle-接口隔离原则" class="headerlink" title="4. I – Interface Segregation Principle 接口隔离原则"></a>4. I – Interface Segregation Principle 接口隔离原则</h3><blockquote>
+<p>多个特定客户端接口要好于一个宽泛用途的接口。</p>
+<p>客户端不应该强行依赖它不需要的接口。</p>
+<p>类间的依赖关系应该建立在最小的接口上。</p>
+<p>客户端不应该依赖它不需要的接口，意思就是说客户端只要依赖它需要的接口，它需要什么接口，就提供什么接口，不提供多余的接口。</p>
+<p>“类间的依赖关系应该建立在最小的接口上”也表达这一层意思。</p>
+<p>通俗的讲就是：接口中的方法应该尽量少，不要使接口过于臃肿，不要有很多不相关的逻辑方法。</p>
+</blockquote>
+<p>我们继续以形状举例，形状有立体形状所以给形状接口ShapeInterface提供体积计算方法volume：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有实现ShapeInterface接口的形状类都要实现volume方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Circle <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.PI * Math.sqrt(<span class="keyword">this</span>.radius);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.0d</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Square</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.0d</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cube</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cube</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">6</span> * Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.pow(<span class="keyword">this</span>.length, <span class="number">3</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这么做会导致Circle和Square这样的平面图形必须要实现一个不必要的volume方法。<br>可以提供一个立体形状接口SolidShapeInterface，提供volume供立体形状来实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">area</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SolidShapeInterface</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Circle <span class="title">Circle</span><span class="params">(<span class="keyword">double</span> radius)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.radius = radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.PI * Math.sqrt(<span class="keyword">this</span>.radius);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">this</span>.radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Square</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cube</span> <span class="keyword">implements</span> <span class="title">ShapeInterface</span>, <span class="title">SolidShapeInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cube</span><span class="params">(<span class="keyword">double</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.length = length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">6</span> * Math.sqrt(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">volume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.pow(<span class="keyword">this</span>.length, <span class="number">3</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.length;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-D-–-Dependency-Inversion-Principle-依赖倒置原则"><a href="#5-D-–-Dependency-Inversion-Principle-依赖倒置原则" class="headerlink" title="5. D – Dependency Inversion Principle 依赖倒置原则"></a>5. D – Dependency Inversion Principle 依赖倒置原则</h3><blockquote>
+<p>一个方法应该遵从“依赖于抽象而不是一个实例”</p>
+<p>高层模块不应该依赖低层模块，两者都应该依赖其抽象；</p>
+<p>抽象不应该依赖细节；</p>
+<p>细节应该依赖抽象。</p>
+</blockquote>
+<blockquote>
+<p>抽象：即抽象类或接口，两者是不能够实例化的。</p>
+<p>细节：即具体的实现类，实现接口或者继承抽象类所产生的类，两者可以通过关键字new直接被实例化。</p>
+</blockquote>
+<blockquote>
+<p>类A直接依赖于类B，假如要将类A修改为依赖类C，则必须通过修改类A的代码来达成。</p>
+<p>这种场景下，类A一般是高层模块，负责复杂的业务逻辑。</p>
+<p>类B和C是底层模块，负责基本的原子操作。</p>
+<p>假如修改类A，将会给程序带来不必要的风险。</p>
+<p>而遵循依赖倒置原则的程序设计可以解决这一问题。</p>
+</blockquote>
+<p>下面以代码示例说明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//具体Jim人类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Jim</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Jim eat &quot;</span> + apple.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体苹果类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;apple&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Jim jim = <span class="keyword">new</span> Jim();</span><br><span class="line">        Apple apple = <span class="keyword">new</span> Apple();</span><br><span class="line">        jim.eat(apple);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码看起来比较简单，但其实是一个非常脆弱的设计。现在Jim可以吃苹果了，但是不能只吃苹果而不吃别的水果啊，这样下去肯定会造成营养失衡。现在想让Jim吃香蕉了（好像香蕉里含钾元素比较多，吃点比较有益），突然发现Jim是吃不了香蕉的，那怎么办呢？看来只有修改代码了啊，由于上面代码中Jim类依赖于Apple类，所以导致不得不去改动Jim类里面的代码。那如果下次Jim又要吃别的水果了呢？继续修改代码？这种处理方式显然是不可取的，频繁修改会带来很大的系统风险，改着改着可能就发现Jim不会吃水果了。</p>
+<p>上面的代码之所以会出现上述难堪的问题，就是因为Jim类依赖于Apple类，两者是紧耦合的关系，其导致的结果就是系统的可维护性大大降低。要增加香蕉类却要去修改Jim类代码，这是不可忍受的，你改你的代码为什么要动我的啊，显然Jim不乐意了。我们常说要设计一个健壮稳定的系统，而这里只是增加了一个香蕉类，就要去修改Jim类，健壮和稳定还从何谈起。</p>
+<p>而根据依赖倒置原则，我们可以对上述代码做些修改，提取抽象的部分。首先我们提取出两个接口：People和Fruit，都提供各自必需的抽象方法，这样以后无论是增加Jim人类，还是增加Apple、Banana等各种水果，都只需要增加自己的实现类就可以了。由于遵循依赖倒置原则，只依赖于抽象，而不依赖于细节，所以增加类无需修改其他类。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//人接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Fruit fruit)</span></span>;<span class="comment">//人都有吃的方法，不然都饿死了</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//水果接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Fruit</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;<span class="comment">//水果都是有名字的</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体Jim人类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Jim</span> <span class="keyword">implements</span> <span class="title">People</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Fruit fruit)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Jim eat &quot;</span> + fruit.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体苹果类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">implements</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;apple&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体香蕉类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Banana</span> <span class="keyword">implements</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;banana&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        People jim = <span class="keyword">new</span> Jim();</span><br><span class="line">        Fruit apple = <span class="keyword">new</span> Apple();</span><br><span class="line">        Fruit Banana = <span class="keyword">new</span> Banana();<span class="comment">//这里符合了里氏替换原则</span></span><br><span class="line">        jim.eat(apple);</span><br><span class="line">        jim.eat(Banana);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>People类是复杂的业务逻辑，属于高层模块，而Fruit是原子模块，属于低层模块。People依赖于抽象的Fruit接口，这就做到了：高层模块不应该依赖低层模块，两者都应该依赖于抽象（抽象类或接口）。</li>
+<li>Pople和Fruit接口与各自的实现类没有关系，增加实现类不会影响接口，这就做到了：抽象（抽象类或接口）不应该依赖于细节（具体实现类）。</li>
+<li>Jim、Apple、Banana实现类都要去实现各自的接口所定义的抽象方法，所以是依赖于接口的。这就做到了：细节（具体实现类）应该依赖抽象。<br>通过上面的代码段我们可以看到，高级和低级模块都取决于抽象。</li>
+</ul>
+<p>到了这里，我们对依赖倒置原则的“依赖”就很好理解了，但是什么是“倒置”呢。是这样子的，刚开始按照正常人的一般思维方式，我想吃香蕉就是吃香蕉，想吃苹果就吃苹果，编程也是这样，都是按照面向实现的思维方式来设计。而现在要倒置思维，提取公共的抽象，面向接口（抽象类）编程。不再依赖于具体实现了，而是依赖于接口或抽象类，这就是依赖的思维方式“倒置”了。</p>
+<p>依赖倒置常用的三种实现方式：</p>
+<ol>
+<li>依赖接口作为参数使用</li>
+<li>依赖接口通过构造函数传递</li>
+<li>依赖接口通过setter方法传递</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>面向对象设计的这五条基本原则是设计模式和重构的基础。<br>只有充分理解这五条原则才能更好的理解设计模式的思想，更好的进行代码的重构。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+              <a href="/tags/oop/" rel="tag"># oop</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/11/rpc/" rel="prev" title="基于jdk序列化和tcp的rpc调用">
+                  <i class="fa fa-chevron-left"></i> 基于jdk序列化和tcp的rpc调用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/11/13/travis-ci/" rel="next" title="travis-ci自动编译github page">
+                  travis-ci自动编译github page <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SakyaWang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
