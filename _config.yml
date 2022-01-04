@@ -8,7 +8,7 @@ subtitle:
 description: 治大国如烹小鲜，编程亦然
 keywords:
 author: SakyaWang
-language: zh-Hans
+language: zh-CN
 timezone:
 
 # URL
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: next 
 
 plugins: hexo-generator-sitemap
 
