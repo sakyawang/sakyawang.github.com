@@ -8,7 +8,7 @@ categories:
 tags:
 - javascript
 - html
-
+cover: https://images.pexels.com/photos/6913844/pexels-photo-6913844.jpeg
 ---
 ## 背景 ##
 一般在html中打开新页面都是直接使用window.open(url)，打开新的页面是get请求，如果url有参数的话URL就会很长，在浏览器上会有参数显示。这里使用post请求可以避免该问题。

@@ -8,6 +8,8 @@ categories:
 tags:
 - 微服务
 - 数据处理
+
+cover: https://images.pexels.com/photos/950754/pexels-photo-950754.jpeg
 ---
 
 本文介绍在微服务体系结构中管理数据时的注意事项。 由于每个微服务管理自身的数据，因此，数据完整性和数据一致性是关键的挑战。

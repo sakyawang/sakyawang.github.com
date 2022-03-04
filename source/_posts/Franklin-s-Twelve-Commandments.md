@@ -8,6 +8,7 @@ categories:
 tags:
 - 戒律
 
+cover: https://images.pexels.com/photos/762687/pexels-photo-762687.jpeg
 ---
 
 阅读《富兰克林自传》整理。

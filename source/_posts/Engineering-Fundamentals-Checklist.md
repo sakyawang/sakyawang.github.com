@@ -8,6 +8,7 @@ categories:
 tags:
 - engineering
 
+cover: https://images.pexels.com/photos/1226398/pexels-photo-1226398.jpeg
 ---
 
 ## 源码管理

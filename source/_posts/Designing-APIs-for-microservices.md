@@ -7,6 +7,8 @@ categories:
 tags:
 - 微服务
 - api
+
+cover: https://images.pexels.com/photos/7911758/pexels-photo-7911758.jpeg
 ---
 
 在微服务体系结构中，合理的 API 设计非常重要，因为服务之间的所有数据交换都是通过消息或 API 调用发生的。 API 必须有效，以避免出现[琐碎 I/O](https://docs.microsoft.com/zh-cn/azure/architecture/antipatterns/chatty-io/)。 由于服务是由独立工作的团队设计的，API 必须具有完善定义的语义和版本控制方案，使得更新不会中断其他服务。

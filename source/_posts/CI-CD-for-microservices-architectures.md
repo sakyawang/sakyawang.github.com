@@ -8,6 +8,8 @@ categories:
 tags:
 - 微服务
 - CI/CD
+
+cover: https://images.pexels.com/photos/3023211/pexels-photo-3023211.jpeg
 ---
 
 更快的发布周期是微服务体系结构的主要优势之一。 但是，如果没有良好的 CI/CD 流程，你将不会实现微服务承诺的灵活性。 本文介绍挑战，并推荐一些解决问题的方法。

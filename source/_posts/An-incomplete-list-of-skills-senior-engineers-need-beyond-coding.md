@@ -3,11 +3,11 @@ title: 'An incomplete list of skills senior engineers need, beyond coding'
 date: 2021-06-25 14:27:00
 description: 一份不完整的高级工程师需要的编码之外的技能清单
 categories:
-- develop
-
+  - develop
 tags:
-- develop
-
+  - develop
+top_img:
+cover: https://images.pexels.com/photos/6913844/pexels-photo-6913844.jpeg
 ---
 
 [原文](https://skamille.medium.com/an-incomplete-list-of-skills-senior-engineers-need-beyond-coding-8ed4a521b29f)

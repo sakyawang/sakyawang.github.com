@@ -9,6 +9,7 @@ tags:
 - 微服务
 - 运行模式
 
+cover: https://images.pexels.com/photos/1036808/pexels-photo-1036808.jpeg
 ---
 
 “运行模式”指的是计算资源（应用程序在这些资源上运行）的承载模型。 在微服务体系结构方面，有两种方案特别流行：

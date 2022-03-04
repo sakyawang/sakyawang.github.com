@@ -9,6 +9,8 @@ tags:
 - 微服务
 - CI/CD
 - k8s
+
+cover: https://images.pexels.com/photos/3685207/pexels-photo-3685207.jpeg
 ---
 
 为微服务体系结构创建可靠的 CI/CD 过程可能很有挑战性。 单个团队必须能够快速可靠地发布服务，而不会干扰其他团队或使应用程序整体不稳定。

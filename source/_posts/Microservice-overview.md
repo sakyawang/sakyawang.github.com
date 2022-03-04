@@ -8,6 +8,7 @@ categories:
 tags:
 - 微服务
 
+cover: https://images.pexels.com/photos/5797900/pexels-photo-5797900.jpeg
 ---
 
 [原文](https://docs.microsoft.com/zh-cn/azure/architecture/microservices/)
