@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>设计模式解读之一： 策略模式 | 编程私厨</title><meta name="keywords" content="设计模式,组合,继承"><meta name="author" content="SakyaWang"><meta name="copyright" content="SakyaWang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="设计模式解读之一： 策略模式&#x2F;“组合”优于“继承” 例子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式解读之一： 策略模式">
+<meta property="og:url" content="http://sakyawang.me/2015/07/28/design-pattern-strategy/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="设计模式解读之一： 策略模式&#x2F;“组合”优于“继承” 例子">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2015-07-28T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-04T08:58:50.368Z">
+<meta property="article:author" content="SakyaWang">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="组合">
+<meta property="article:tag" content="继承">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://sakyawang.me/2015/07/28/design-pattern-strategy/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式解读之一： 策略模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-04 08:58:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">编程私厨</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">设计模式解读之一： 策略模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2015-07-28T00:00:00.000Z" title="发表于 2015-07-28 00:00:00">2015-07-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-04T08:58:50.368Z" title="更新于 2022-03-04 08:58:50">2022-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式解读之一： 策略模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>转自：<a target="_blank" rel="noopener" href="http://www.javaeye.com/topic/328262">http://www.javaeye.com/topic/328262</a></p>
+<p>当我们掌握了Java的语法，当我们了解了面向对象的封装、继承、多态等特性，当我们可以用Swing、Servlet、JSP技术构建桌面以及Web应用，不意味着我们可以写出面向对象的程序，不意味着我们可以很好的实现代码复用，弹性维护，不意味着我们可以实现在维护、扩展基础上的代码复用。</p>
+<p>一把刀，可以使你制敌于无形而于江湖扬名，也可以只是一把利刃而使你切菜平静。Java，就是这把刀，它的威力取决于你使用的方式。当我们陷入无尽无止重复代码的泥沼，当我们面临牵一发而动全身的维护恶梦, 你应该想起“设计模式”这个行动秘笈。</p>
+<p>面向对象的精义，看似平淡，其实要经过艰苦实践才能成功。而构造OO系统的隐含经验于是被前人搜集而成并冠以“设计模式”之名。我们应该在编码行动初始就携带以它。接下来，让我们步“四人组”先行者之后，用中国文字、用实际案例领略模式于我们代码焕然一新的改变。</p>
+<h2 id="设计模式解读之一：-策略模式"><a href="#设计模式解读之一：-策略模式" class="headerlink" title="设计模式解读之一： 策略模式"></a>设计模式解读之一： 策略模式</h2><p><strong>1. 模式定义</strong></p>
+<p>把会变化的内容取出并封装起来，以便以后可以轻易地改动或扩充部分，而不影响不需要变化的其他部分；</p>
+<p><strong>2. 问题缘起</strong></p>
+<p>当涉及至代码维护时，为了复用目的而使用继承，结局并不完美。对父类的修改，会影响到子类型。在超类中增加的方法，会导致子类型有该方法，甚至连那些不该具备该方法的子类型也无法免除。示例，一个鸭子类型：</p>
+<pre><code>public abstract class Duck &#123;
+    //所有的鸭子均会叫以及游泳，所以父类中处理这部分代码
+    public void quack() &#123;
+        System.out.println(&quot;Quack&quot;);
+    &#125;
+    
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    //因为每种鸭子的外观是不同的，所以父类中该方法是抽象的，由子类型自己完成。
+    public abstract void display();
+&#125;
+
+public class MallardDuck extends Duck &#123;
+    //野鸭外观显示为绿头
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+&#125;
+
+public class RedHeadDuck extends Duck &#123;
+    //红头鸭显示为红头
+    public void display() &#123;
+        System.out.println(&quot;Red head.&quot;);
+    &#125;
+&#125;
+
+public class RubberDuck extends Duck &#123;
+    //橡皮鸭叫声为吱吱叫，所以重写父类以改写行为
+    public void quack() &#123;
+        System.out.println(&quot;Squeak&quot;);
+    &#125;
+
+    //橡皮鸭显示为黄头
+    public void display() &#123;
+        System.out.println(&quot;Yellow head.&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码，初始实现得非常好。现在我们如果给Duck.java中加入fly()方法的话，那么在子类型中均有了该方法，于是我们看到了 会飞的橡皮鸭子，你看过吗？当然，我们可以在子类中通过空实现重写该方法以解决该方法对于子类型的影响。但是父类中再增加其它的方法呢？</p>
+<p>通过继承在父类中提供行为，会导致以下缺点：</p>
+<ul>
+<li>代码在多个子类中重复;</li>
+<li>运行时的行为不容易改变；</li>
+<li>改变会牵一发动全身，造成部分子类型不想要的改变；</li>
+</ul>
+<p>好啦，还是刚才鸭子的例子，你也许想到使用接口，将飞的行为、叫的行为定义为接口，然后让Duck的各种子类型实现这些接口。这时侯代码类似于：</p>
+<pre><code>public abstract class Duck &#123;
+    //将变化的行为 fly() 以及quake()从Duck类中分离出去定义形成接口，有需求的子类中自行去实现
+
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    public abstract void display();
+&#125;
+
+//变化的 fly() 行为定义形成的接口
+public interface FlyBehavior &#123;
+    void fly();
+&#125;
+
+//变化的 quack() 行为定义形成的接口
+public interface QuackBehavior &#123;
+    void quack();
+&#125;
+
+//野鸭子会飞以及叫，所以实现接口  FlyBehavior, QuackBehavior
+public class MallardDuck extends Duck implements FlyBehavior, QuackBehavior&#123;
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+
+    public void fly() &#123;
+        System.out.println(&quot;Fly.&quot;);                
+    &#125;
+
+    public void quack() &#123;
+        System.out.println(&quot;Quack.&quot;);                
+    &#125;
+&#125;
+
+//红头鸭子会飞以及叫，所以也实现接口  FlyBehavior, QuackBehavior
+public class RedHeadDuck extends Duck implements FlyBehavior, QuackBehavior&#123;
+    public void display() &#123;
+        System.out.println(&quot;Red head.&quot;);
+    &#125;    
+
+    public void fly() &#123;
+        System.out.println(&quot;Fly.&quot;);                
+    &#125;
+
+    public void quack() &#123;
+        System.out.println(&quot;Quack.&quot;);                
+    &#125;    
+&#125;
+
+//橡皮鸭不会飞，但会吱吱叫，所以只实现接口QuackBehavior
+public class RubberDuck extends Duck implements QuackBehavior&#123;
+    //橡皮鸭叫声为吱吱叫
+    public void quack() &#123;
+        System.out.println(&quot;Squeak&quot;);
+    &#125;
+
+    //橡皮鸭显示为黄头
+    public void display() &#123;
+        System.out.println(&quot;Yellow head.&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码虽然解决了一部分问题，让子类型可以有选择地提供一些行为(例如 fly() 方法将不会出现在橡皮鸭中).但我们也看到，野鸭子MallardDuck.java和红头鸭子RedHeadDuck.java的一些相同行为代码不能得到重复使用。很大程度上这是从一个火坑跳到另一个火坑。</p>
+<p>在一段程序之后，让我们从细节中跳出来，关注一些共性问题。不管使用什么语言，构建什么应用，在软件开发上，一直伴随着的不变的真理是：需要一直在变化。不管当初软件设计得多好，一段时间之后，总是需要成长与改变，否则软件就会死亡。</p>
+<p>我们知道，继承在某种程度上可以实现代码重用，但是父类(例如鸭子类Duck)的行为在子类型中是不断变化的，让所有子类型都有这些行为是不恰当的。我们可以将这些行为定义为接口，让Duck的各种子类型去实现，但接口不具有实现代码，所以实现接口无法达到代码复用。这意味着，当我们需要修改某个行为，必须往下追踪并在每一个定义此行为的类中修改它，一不小心，会造成新的错误。</p>
+<p>设计原则：</p>
+<pre><code>把应用中变化的地方独立出来，不要和那些不需要变化的代码混在一起。
+这样代码变化引起的不经意后果变少，系统变得更有弹性。
+</code></pre>
+<p>按照上述设计原则，我们重新审视之前的Duck代码。</p>
+<p><strong>1) 分开变化的内容和不变的内容</strong></p>
+<p>Duck类中的行为 fly(), quack(), 每个子类型可能有自己特有的表现，这就是所谓的变化的内容。</p>
+<p>Duck类中的行为 swim() 每个子类型的表现均相同，这就是所谓不变的内容。</p>
+<p>我们将变化的内容从Duck()类中剥离出来单独定义形成接口以及一系列的实现类型。将变化的内容定义形成接口可实现变化内容和不变内容的剥离。其实现类型可实现变化内容的重用。这些实现类并非Duck.java的子类型，而是专门的一组实现类，称之为”行为类”。由行为类而不是Duck.java的子类型来实现接口。这样，才能保证变化的行为独立于不变的内容。于是我们有：</p>
+<p>变化的内容：</p>
+<pre><code>   //变化的 fly() 行为定义形成的接口
+   public interface FlyBehavior &#123;
+    void fly();
+   &#125;
+     
+   //变化的 fly() 行为的实现类之一
+   public class FlyWithWings implements FlyBehavior &#123;
+    public void fly() &#123;
+        System.out.println(&quot;I&#39;m flying.&quot;);
+    &#125;
+   &#125;
+
+   //变化的 fly() 行为的实现类之二
+   public class FlyNoWay implements FlyBehavior &#123;
+    public void fly() &#123;
+        System.out.println(&quot;I can&#39;t fly.&quot;);
+    &#125;
+   &#125;
+
+       -----------------------------------------------------------------
+
+   //变化的 quack() 行为定义形成的接口
+   public interface QuackBehavior &#123;
+    void quack();
+   &#125;
+
+   //变化的 quack() 行为实现类之一
+   public class Quack implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;Quack&quot;);
+    &#125;
+   &#125;
+
+   //变化的 quack() 行为实现类之二
+   public class Squeak implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;Squeak.&quot;);
+    &#125;
+   &#125;
+
+   //变化的 quack() 行为实现类之三
+   public class MuteQuack implements QuackBehavior &#123;
+    public void quack() &#123;
+        System.out.println(&quot;&lt;&lt; Slience &gt;&gt;&quot;);
+    &#125;
+   &#125;
+</code></pre>
+<p>通过以上设计，fly()行为以及quack()行为已经和Duck.java没有什么关系，可以充分得到复用。而且我们很容易增加新的行为, 既不影响现有的行为，也不影响Duck.java。但是，大家可能有个疑问，就是在面向对象中行为不是体现为方法吗？为什么现在被定义形成类(例如Squeak.java)？在OO中，类代表的”东西”一般是既有状态(实例变量）又有方法。只是在本例中碰巧”东西”是个行为。既使是行为，也有属性及方法，例如飞行行为，也需要一些属性记录飞行的状态，如飞行高度、速度等。</p>
+<p><strong>2) 整合变化的内容和不变的内容</strong></p>
+<p>Duck.java将 fly()以及quack()的行为委拖给行为类处理。</p>
+<p>不变的内容：</p>
+<pre><code>   public abstract class Duck &#123;
+        //将行为类声明为接口类型，降低对行为实现类型的依赖
+    FlyBehavior flyBehavior;
+    QuackBehavior quackBehavior;
+
+    public void performFly() &#123;
+        //不自行处理fly()行为，而是委拖给引用flyBehavior所指向的行为对象
+        flyBehavior.fly();
+    &#125;
+
+    public void performQuack() &#123;
+        quackBehavior.quack();
+    &#125;
+
+    public void swim() &#123;
+        System.out.println(&quot;All ducks float, even decoys.&quot;);        
+    &#125;
+    
+    public abstract void display();
+   &#125;
+
+   Duck.java不关心如何进行 fly()以及quack(), 这些细节交由具体的行为类完成。
+   
+   public class MallardDuck extends Duck&#123;
+    public MallardDuck() &#123;
+        flyBehavior=new FlyWithWings();
+        quackBehavior=new Quack();        
+    &#125;
+    
+    public void display() &#123;
+        System.out.println(&quot;Green head.&quot;);
+    &#125;
+   &#125;
+</code></pre>
+<p>测试类：</p>
+<pre><code>   public class DuckTest &#123;
+    public static void main(String[] args) &#123;
+        Duck duck=new MallardDuck();
+        duck.performFly();
+        duck.performQuack();        
+    &#125;
+   &#125;
+</code></pre>
+<p>在Duck.java子类型MallardDuck.java的构造方法中，直接实例化行为类型，在编译的时侯便指定具体行为类型。当然，我们可以：</p>
+<ul>
+<li><p>我们可以通过工厂模式或其它模式进一步解藕(可参考后续模式讲解);</p>
+</li>
+<li><p>或做到在运行时动态地改变行为。</p>
+</li>
+</ul>
+<p><strong>3) 动态设定行为</strong></p>
+<p>在父类Duck.java中增加设定行为类型的setter方法，接受行为类型对象的参数传入。为了降藕，行为参数被声明为接口类型。这样，既便在运行时，也可以通过调用这二个方法以改变行为。</p>
+<pre><code>   public abstract class Duck &#123;
+    //在刚才Duck.java中加入以下二个方法。
+    public void setFlyBehavior(FlyBehavior flyBehavior) &#123;
+        this.flyBehavior=flyBehavior;
+    &#125;
+    
+    public void setQuackBehavior(QuackBehavior quackBehavior) &#123;
+        this.quackBehavior=quackBehavior;
+    &#125;
+
+    //其它方法同，省略...
+   &#125;
+</code></pre>
+<p>测试类：</p>
+<pre><code>   public class DuckTest &#123;
+    public static void main(String[] args) &#123;
+        Duck duck=new MallardDuck();
+        duck.performFly();
+        duck.performQuack();
+        duck.setFlyBehavior(new FlyNoWay());
+        duck.performFly();
+    &#125;
+   &#125;
+</code></pre>
+<p>如果，我们要加上火箭助力的飞行行为，只需再新建FlyBehavior.java接口的实现类型。而子类型可通过调用setQuackBehavior(…)方法动态改变。至此，在Duck.java增加新的行为给我们代码所带来的困绕已不复存在。</p>
+<p>该是总结的时侯了，让我们从代码的水中浮出来，做一只在水面上自由游动的鸭子吧:</p>
+<h2 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3.  解决方案"></a>3.  解决方案</h2><ul>
+<li>MallardDuck 继承  Duck抽象类；          -&gt; 不变的内容</li>
+<li>FlyWithWings 实现 FlyBehavior接口；     -&gt; 变化的内容,行为或算法</li>
+<li>在Duck.java提供setter方法以装配关系；    -&gt; 动态设定行为</li>
+</ul>
+<p>以上就是策略模式的实现三步曲。接下来，让我们透过步骤看本质:</p>
+<ul>
+<li><p>初始，我们通过继承实现行为的重用，导致了代码的维护问题。          -&gt; 继承, is a</p>
+</li>
+<li><p>接着，我们将行为剥离成单独的类型并声明为不变内容的实例变量并通过  -&gt; 组合, has a<br>setter方法以装配关系；</p>
+<pre><code>  继承，可以实现静态代码的复用；
+  组合，可以实现代码的弹性维护；
+  使用组合代替继承，可以使代码更好地适应软件开发完后的需求变化。
+  策略模式的本质：少用继承，多用组合
+</code></pre>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">SakyaWang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://sakyawang.me/2015/07/28/design-pattern-strategy/">http://sakyawang.me/2015/07/28/design-pattern-strategy/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://sakyawang.me" target="_blank">编程私厨</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><a class="post-meta__tags" href="/tags/%E7%BB%84%E5%90%88/">组合</a><a class="post-meta__tags" href="/tags/%E7%BB%A7%E6%89%BF/">继承</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2015/07/29/java-proxy/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">java代理</div></div></a></div><div class="next-post pull-right"><a href="/2015/07/17/stack/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">stack的三种含义</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/07/Design-patterns-for-microservices/" title="微服务的设计模式"><img class="cover" src="https://images.pexels.com/photos/4913367/pexels-photo-4913367.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-07</div><div class="title">微服务的设计模式</div></div></a></div><div><a href="/2017/10/27/solid/" title="面向对象设计基本原则"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-10-27</div><div class="title">面向对象设计基本原则</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">SakyaWang</div><div class="author-info__description">治大国如烹小鲜，编程亦然</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E8%AF%BB%E4%B9%8B%E4%B8%80%EF%BC%9A-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">设计模式解读之一： 策略模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">3.  解决方案</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/04/Designing-APIs-for-microservices/" title="微服务-API设计"><img src="https://images.pexels.com/photos/7911758/pexels-photo-7911758.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务-API设计"/></a><div class="content"><a class="title" href="/2022/03/04/Designing-APIs-for-microservices/" title="微服务-API设计">微服务-API设计</a><time datetime="2022-03-04T08:58:50.360Z" title="发表于 2022-03-04 08:58:50">2022-03-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Building-a-CI-CD-pipeline-for-microservices-on-Kubernetes/" title="在K8S平台为微服务构建CI/CD"><img src="https://images.pexels.com/photos/3685207/pexels-photo-3685207.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在K8S平台为微服务构建CI/CD"/></a><div class="content"><a class="title" href="/2022/01/07/Building-a-CI-CD-pipeline-for-microservices-on-Kubernetes/" title="在K8S平台为微服务构建CI/CD">在K8S平台为微服务构建CI/CD</a><time datetime="2022-01-07T17:48:15.000Z" title="发表于 2022-01-07 17:48:15">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/CI-CD-for-microservices-architectures/" title="适用于微服务系统结构的CI/CD"><img src="https://images.pexels.com/photos/3023211/pexels-photo-3023211.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="适用于微服务系统结构的CI/CD"/></a><div class="content"><a class="title" href="/2022/01/07/CI-CD-for-microservices-architectures/" title="适用于微服务系统结构的CI/CD">适用于微服务系统结构的CI/CD</a><time datetime="2022-01-07T17:31:27.000Z" title="发表于 2022-01-07 17:31:27">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Design-patterns-for-microservices/" title="微服务的设计模式"><img src="https://images.pexels.com/photos/4913367/pexels-photo-4913367.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务的设计模式"/></a><div class="content"><a class="title" href="/2022/01/07/Design-patterns-for-microservices/" title="微服务的设计模式">微服务的设计模式</a><time datetime="2022-01-07T15:49:11.000Z" title="发表于 2022-01-07 15:49:11">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Data-considerations-for-microservices/" title="微服务的数据处理注意事项"><img src="https://images.pexels.com/photos/950754/pexels-photo-950754.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务的数据处理注意事项"/></a><div class="content"><a class="title" href="/2022/01/07/Data-considerations-for-microservices/" title="微服务的数据处理注意事项">微服务的数据处理注意事项</a><time datetime="2022-01-07T15:48:25.000Z" title="发表于 2022-01-07 15:48:25">2022-01-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By SakyaWang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

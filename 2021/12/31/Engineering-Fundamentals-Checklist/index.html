@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>软件工程检查清单 | 编程私厨</title><meta name="keywords" content="engineering"><meta name="author" content="SakyaWang"><meta name="copyright" content="SakyaWang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软件工程检查清单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程检查清单">
+<meta property="og:url" content="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/index.html">
+<meta property="og:site_name" content="编程私厨">
+<meta property="og:description" content="软件工程检查清单">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.pexels.com/photos/1226398/pexels-photo-1226398.jpeg">
+<meta property="article:published_time" content="2021-12-31T11:16:55.000Z">
+<meta property="article:modified_time" content="2022-03-04T08:58:50.364Z">
+<meta property="article:author" content="SakyaWang">
+<meta property="article:tag" content="engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.pexels.com/photos/1226398/pexels-photo-1226398.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '软件工程检查清单',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-04 08:58:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">编程私厨</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">软件工程检查清单</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-31T11:16:55.000Z" title="发表于 2021-12-31 11:16:55">2021-12-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-04T08:58:50.364Z" title="更新于 2022-03-04 08:58:50">2022-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/develop/">develop</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="软件工程检查清单"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h2><ul>
+<li>默认分支是否锁定</li>
+<li>是否通过PR合并分支</li>
+<li>PRs引用相关工作项</li>
+<li>提交历史是一致的并且提交信息丰富（包含做了什么，为什么）</li>
+<li>一致的分支命名约定</li>
+<li>清晰的存储库结构说明文档</li>
+<li>密码等安全信息不作为提交历史的一部分或者公开</li>
+<li>公共仓库遵循OSS 规范</li>
+</ul>
+<h2 id="工作项跟踪"><a href="#工作项跟踪" class="headerlink" title="工作项跟踪"></a>工作项跟踪</h2><ul>
+<li>所有个工作项在DevOps系统跟踪</li>
+<li>工作项内容是有组织的（泳道，特征标签，技术标签）</li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li>单元测试覆盖大部分组件（最好大于90%）</li>
+<li>集成测试按照 end-to-en测试方案进行</li>
+</ul>
+<h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI/CD"></a>CI/CD</h2><ul>
+<li>项目运行 CI，并在每个 PR 上自动构建和测试</li>
+<li>在合并 PR 之前，Project 使用 CD 来管理到副本环境的部署</li>
+<li>主分支总是可以发布的</li>
+</ul>
+<h2 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h2><ul>
+<li>仅根据需要授予访问权限</li>
+<li>密码存储在安全的位置，而不是签入代码</li>
+<li>数据在传输中被加密并且密码做hash</li>
+<li>系统是否拆分为具有关注点分离的逻辑段？这有助于限制安全漏洞</li>
+</ul>
+<h2 id="可观察性"><a href="#可观察性" class="headerlink" title="可观察性"></a>可观察性</h2><ul>
+<li>跟踪重要的业务和功能事件并收集相关指标</li>
+<li>记录应用程序故障和错误</li>
+<li>系统的健康状况受到监控</li>
+<li>可以区分客户端和服务器端的可观察性数据</li>
+<li>无需更改代码即可修改日志配置</li>
+<li>传入的跟踪上下文被传播以允许生产问题调试目的</li>
+<li>通用数据保护确保遵守个人身份信息保护条例</li>
+</ul>
+<h2 id="敏捷-SCRUM"><a href="#敏捷-SCRUM" class="headerlink" title="敏捷/SCRUM"></a>敏捷/SCRUM</h2><ul>
+<li>流程主管（固定/轮换）运行每日站会</li>
+<li>敏捷过程在团队中是明确定义的</li>
+<li>开发主管（+ PO/其他）负责Backlog管理和细化</li>
+<li>在团队成员和客户之间建立工作协议</li>
+</ul>
+<h2 id="设计评审"><a href="#设计评审" class="headerlink" title="设计评审"></a>设计评审</h2><ul>
+<li>进行设计审查的过程包含在工作协议中</li>
+<li>对解决方案的每个主要组件进行设计审查并记录在案，包括替代方案</li>
+<li>故事 或 需求 链接到设计文档</li>
+<li>默认情况下，每个用户故事都包含一个用于设计评审的任务，该任务在 sprint 计划期间被分配或删除</li>
+<li>邀请项目顾问进行设计评审或要求对文档中捕获的设计决策提供反馈</li>
+<li>发现客户流程所需的所有评论并为其制定计划</li>
+<li>捕捉到明确的非功能性需求</li>
+</ul>
+<h2 id="代码审查"><a href="#代码审查" class="headerlink" title="代码审查"></a>代码审查</h2><ul>
+<li>团队对代码审查的功能有明确的共识</li>
+<li>团队有代码审查清单或既定流程</li>
+<li>PR 合并的最少审阅者数量（通常为 2 个）作为规范强制执行</li>
+<li>为 PR 合并设置 Linters/代码分析器、单元测试和成功构建条件</li>
+<li>有一个流程可以强制执行快速审核周转</li>
+</ul>
+<h2 id="回顾会"><a href="#回顾会" class="headerlink" title="回顾会"></a>回顾会</h2><ul>
+<li>每周/每个冲刺结束时都会进行回顾</li>
+<li>该团队确定了 1-3 个提议的实验，每周/冲刺尝试以改进流程</li>
+<li>实验项有负责人并被添加到项目Backlog</li>
+<li>团队在里程碑和项目完成后进行了更长时间的回顾总结</li>
+</ul>
+<h2 id="工程反馈"><a href="#工程反馈" class="headerlink" title="工程反馈"></a>工程反馈</h2><ul>
+<li>团队提交有关阻止项目成功的业务和技术障碍的反馈</li>
+<li>解决方案中包含了改进建议</li>
+<li>反馈详细且可重复</li>
+</ul>
+<h2 id="开发经验"><a href="#开发经验" class="headerlink" title="开发经验"></a>开发经验</h2><ul>
+<li>构建/编译源码以验证它没有语法错误并编译通过</li>
+<li>执行所有的自动化测试（单元测试，end-to-end测试等）</li>
+<li>在部署环境启动端到端的模拟运行</li>
+<li>将调试器附加到已启动的解决方案或运行自动化测试、设置断点、单步执行代码和检查变量</li>
+<li>通过在其 IDE 中按 F5（或等效项）自动安装依赖项</li>
+<li>使用本地开发配置值（即 .env、appsettings.development.json）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">SakyaWang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/">http://sakyawang.me/2021/12/31/Engineering-Fundamentals-Checklist/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://sakyawang.me" target="_blank">编程私厨</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/engineering/">engineering</a></div><div class="post_share"><div class="social-share" data-image="https://images.pexels.com/photos/1226398/pexels-photo-1226398.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/07/Microservice-overview/"><img class="prev-cover" src="https://images.pexels.com/photos/5797900/pexels-photo-5797900.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">微服务开发总结</div></div></a></div><div class="next-post pull-right"><a href="/2021/06/25/An-incomplete-list-of-skills-senior-engineers-need-beyond-coding/"><img class="next-cover" src="https://images.pexels.com/photos/6913844/pexels-photo-6913844.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">An incomplete list of skills senior engineers need, beyond coding</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">SakyaWang</div><div class="author-info__description">治大国如烹小鲜，编程亦然</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">源码管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%A1%B9%E8%B7%9F%E8%B8%AA"><span class="toc-number">2.</span> <span class="toc-text">工作项跟踪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">3.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CI-CD"><span class="toc-number">4.</span> <span class="toc-text">CI&#x2F;CD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">5.</span> <span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%A7%82%E5%AF%9F%E6%80%A7"><span class="toc-number">6.</span> <span class="toc-text">可观察性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%8F%E6%8D%B7-SCRUM"><span class="toc-number">7.</span> <span class="toc-text">敏捷&#x2F;SCRUM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1"><span class="toc-number">8.</span> <span class="toc-text">设计评审</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">代码审查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BE%E4%BC%9A"><span class="toc-number">10.</span> <span class="toc-text">回顾会</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%8F%8D%E9%A6%88"><span class="toc-number">11.</span> <span class="toc-text">工程反馈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C"><span class="toc-number">12.</span> <span class="toc-text">开发经验</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/04/Designing-APIs-for-microservices/" title="微服务-API设计"><img src="https://images.pexels.com/photos/7911758/pexels-photo-7911758.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务-API设计"/></a><div class="content"><a class="title" href="/2022/03/04/Designing-APIs-for-microservices/" title="微服务-API设计">微服务-API设计</a><time datetime="2022-03-04T08:58:50.360Z" title="发表于 2022-03-04 08:58:50">2022-03-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Building-a-CI-CD-pipeline-for-microservices-on-Kubernetes/" title="在K8S平台为微服务构建CI/CD"><img src="https://images.pexels.com/photos/3685207/pexels-photo-3685207.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在K8S平台为微服务构建CI/CD"/></a><div class="content"><a class="title" href="/2022/01/07/Building-a-CI-CD-pipeline-for-microservices-on-Kubernetes/" title="在K8S平台为微服务构建CI/CD">在K8S平台为微服务构建CI/CD</a><time datetime="2022-01-07T17:48:15.000Z" title="发表于 2022-01-07 17:48:15">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/CI-CD-for-microservices-architectures/" title="适用于微服务系统结构的CI/CD"><img src="https://images.pexels.com/photos/3023211/pexels-photo-3023211.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="适用于微服务系统结构的CI/CD"/></a><div class="content"><a class="title" href="/2022/01/07/CI-CD-for-microservices-architectures/" title="适用于微服务系统结构的CI/CD">适用于微服务系统结构的CI/CD</a><time datetime="2022-01-07T17:31:27.000Z" title="发表于 2022-01-07 17:31:27">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Design-patterns-for-microservices/" title="微服务的设计模式"><img src="https://images.pexels.com/photos/4913367/pexels-photo-4913367.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务的设计模式"/></a><div class="content"><a class="title" href="/2022/01/07/Design-patterns-for-microservices/" title="微服务的设计模式">微服务的设计模式</a><time datetime="2022-01-07T15:49:11.000Z" title="发表于 2022-01-07 15:49:11">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/Data-considerations-for-microservices/" title="微服务的数据处理注意事项"><img src="https://images.pexels.com/photos/950754/pexels-photo-950754.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务的数据处理注意事项"/></a><div class="content"><a class="title" href="/2022/01/07/Data-considerations-for-microservices/" title="微服务的数据处理注意事项">微服务的数据处理注意事项</a><time datetime="2022-01-07T15:48:25.000Z" title="发表于 2022-01-07 15:48:25">2022-01-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By SakyaWang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
